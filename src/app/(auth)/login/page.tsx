@@ -54,13 +54,13 @@ function LoginForm() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8">
-      <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
+    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-8">
+      <h2 className="text-2xl font-bold text-white text-center mb-6">
         Masuk
       </h2>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+        <div className="mb-4 p-3 bg-red-900/50 border border-red-400/50 text-red-200 rounded-lg text-sm">
           {error}
         </div>
       )}
@@ -69,7 +69,7 @@ function LoginForm() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-white mb-1"
           >
             Email
           </label>
@@ -79,7 +79,7 @@ function LoginForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 bg-white/15 border border-white/30 text-white placeholder-red-200 rounded-lg focus:ring-2 focus:ring-[#D97706] focus:border-[#D97706] outline-none transition"
             placeholder="alamat@email.com"
           />
         </div>
@@ -87,7 +87,7 @@ function LoginForm() {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-white mb-1"
           >
             Password
           </label>
@@ -97,7 +97,7 @@ function LoginForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 bg-white/15 border border-white/30 text-white placeholder-red-200 rounded-lg focus:ring-2 focus:ring-[#D97706] focus:border-[#D97706] outline-none transition"
             placeholder="Masukkan password"
           />
         </div>
@@ -105,17 +105,17 @@ function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#991B1B] text-white py-2.5 rounded-lg font-medium hover:bg-[#7F1D1D] transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-[#D97706] text-white py-2.5 rounded-lg font-medium hover:bg-amber-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Memproses..." : "Masuk"}
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-gray-600">
+      <p className="mt-6 text-center text-sm text-red-200">
         Belum punya akun?{" "}
         <Link
           href="/register"
-          className="text-[#991B1B] font-medium hover:underline"
+          className="text-[#D97706] font-medium hover:underline"
         >
           Daftar di sini
         </Link>
@@ -128,8 +128,8 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="bg-white rounded-2xl shadow-lg p-8 flex justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#991B1B]" />
+        <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-8 flex justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D97706]" />
         </div>
       }
     >

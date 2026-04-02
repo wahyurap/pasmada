@@ -70,7 +70,7 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
+      <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-8 text-center">
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg
             className="w-8 h-8 text-green-600"
@@ -86,16 +86,16 @@ export default function RegisterPage() {
             />
           </svg>
         </div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">
+        <h2 className="text-xl font-bold text-white mb-2">
           Pendaftaran Berhasil!
         </h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-red-200 mb-6">
           Silakan cek email Anda untuk memverifikasi akun. Periksa juga folder
           spam jika email tidak ditemukan di inbox.
         </p>
         <Link
           href="/login"
-          className="inline-block bg-[#991B1B] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7F1D1D] transition"
+          className="inline-block bg-[#D97706] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-amber-500 transition"
         >
           Ke Halaman Masuk
         </Link>
@@ -104,13 +104,13 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8">
-      <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
+    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-8">
+      <h2 className="text-2xl font-bold text-white text-center mb-6">
         Daftar Akun
       </h2>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+        <div className="mb-4 p-3 bg-red-900/50 border border-red-400/50 text-red-200 rounded-lg text-sm">
           {error}
         </div>
       )}
@@ -119,7 +119,7 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="nama"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-white mb-1"
           >
             Nama
           </label>
@@ -130,7 +130,7 @@ export default function RegisterPage() {
             required
             value={form.nama}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 bg-white/15 border border-white/30 text-white placeholder-red-200 rounded-lg focus:ring-2 focus:ring-[#D97706] focus:border-[#D97706] outline-none transition"
             placeholder="Nama panggilan"
           />
         </div>
@@ -138,7 +138,7 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="namaLengkap"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-white mb-1"
           >
             Nama Lengkap
           </label>
@@ -149,7 +149,7 @@ export default function RegisterPage() {
             required
             value={form.namaLengkap}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 bg-white/15 border border-white/30 text-white placeholder-red-200 rounded-lg focus:ring-2 focus:ring-[#D97706] focus:border-[#D97706] outline-none transition"
             placeholder="Nama lengkap Anda"
           />
         </div>
@@ -157,7 +157,7 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-white mb-1"
           >
             Email
           </label>
@@ -168,7 +168,7 @@ export default function RegisterPage() {
             required
             value={form.email}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 bg-white/15 border border-white/30 text-white placeholder-red-200 rounded-lg focus:ring-2 focus:ring-[#D97706] focus:border-[#D97706] outline-none transition"
             placeholder="alamat@email.com"
           />
         </div>
@@ -176,7 +176,7 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="tahunLulus"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-white mb-1"
           >
             Tahun Lulus
           </label>
@@ -185,7 +185,7 @@ export default function RegisterPage() {
             name="tahunLulus"
             value={form.tahunLulus}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition bg-white"
+            className="w-full px-4 py-2.5 bg-white/15 border border-white/30 text-white rounded-lg focus:ring-2 focus:ring-[#D97706] focus:border-[#D97706] outline-none transition"
           >
             <option value="">Pilih tahun lulus</option>
             {years.map((year) => (
@@ -199,7 +199,7 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-white mb-1"
           >
             Password
           </label>
@@ -210,7 +210,7 @@ export default function RegisterPage() {
             required
             value={form.password}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 bg-white/15 border border-white/30 text-white placeholder-red-200 rounded-lg focus:ring-2 focus:ring-[#D97706] focus:border-[#D97706] outline-none transition"
             placeholder="Minimal 8 karakter"
           />
         </div>
@@ -218,7 +218,7 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="konfirmasiPassword"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-white mb-1"
           >
             Konfirmasi Password
           </label>
@@ -229,7 +229,7 @@ export default function RegisterPage() {
             required
             value={form.konfirmasiPassword}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 bg-white/15 border border-white/30 text-white placeholder-red-200 rounded-lg focus:ring-2 focus:ring-[#D97706] focus:border-[#D97706] outline-none transition"
             placeholder="Ulangi password"
           />
         </div>
@@ -237,17 +237,17 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#991B1B] text-white py-2.5 rounded-lg font-medium hover:bg-[#7F1D1D] transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-[#D97706] text-white py-2.5 rounded-lg font-medium hover:bg-amber-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Memproses..." : "Daftar"}
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-gray-600">
+      <p className="mt-6 text-center text-sm text-red-200">
         Sudah punya akun?{" "}
         <Link
           href="/login"
-          className="text-[#991B1B] font-medium hover:underline"
+          className="text-[#D97706] font-medium hover:underline"
         >
           Masuk di sini
         </Link>
