@@ -22,10 +22,10 @@ export async function sendVerificationEmail(
     subject: "Verifikasi Email - PASMADA",
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1e40af;">PASMADA - Verifikasi Email</h2>
+        <h2 style="color: #991B1B;">PASMADA - Verifikasi Email</h2>
         <p>Halo,</p>
         <p>Terima kasih telah mendaftar di PASMADA (Parsadaan Alumni SMAN Sada). Silakan klik tombol di bawah untuk memverifikasi email Anda:</p>
-        <a href="${verifyUrl}" style="display: inline-block; background-color: #1e40af; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">
+        <a href="${verifyUrl}" style="display: inline-block; background-color: #991B1B; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">
           Verifikasi Email
         </a>
         <p>Atau salin link berikut ke browser Anda:</p>
@@ -50,10 +50,10 @@ export async function sendPasswordResetEmail(
     subject: "Reset Password - PASMADA",
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1e40af;">PASMADA - Reset Password</h2>
+        <h2 style="color: #991B1B;">PASMADA - Reset Password</h2>
         <p>Halo,</p>
         <p>Anda meminta reset password. Silakan klik tombol di bawah:</p>
-        <a href="${resetUrl}" style="display: inline-block; background-color: #1e40af; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">
+        <a href="${resetUrl}" style="display: inline-block; background-color: #991B1B; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">
           Reset Password
         </a>
         <p>Link ini berlaku selama 1 jam.</p>
