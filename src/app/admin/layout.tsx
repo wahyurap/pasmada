@@ -19,10 +19,10 @@ export default function AdminLayout({
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Bar */}
         <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
-          <h1 className="text-xl font-bold text-[#1e40af]">Admin PASMADA</h1>
+          <h1 className="text-xl font-bold text-[#991B1B]">Admin PASMADA</h1>
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 transition"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 transition"
           >
             <svg
               className="w-4 h-4"

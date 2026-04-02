@@ -45,7 +45,7 @@ export default function AlumniCard({
           <h3 className="font-bold text-gray-900 text-base leading-tight truncate">
             {namaLengkap}
           </h3>
-          <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-[#1e40af]">
+          <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-[#991B1B]">
             Angkatan {tahunLulus}
           </span>
         </div>

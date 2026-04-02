@@ -78,7 +78,7 @@ export default function ProfilPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-[#1e40af] border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#991B1B] border-t-transparent rounded-full animate-spin" />
           <p className="text-sm text-gray-500">Memuat profil...</p>
         </div>
       </div>
@@ -92,7 +92,7 @@ export default function ProfilPage() {
           <p className="text-red-600 font-medium mb-4">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-4 py-2 text-sm bg-[#1e40af] text-white rounded-lg hover:bg-[#1e3a8a] transition"
+            className="px-4 py-2 text-sm bg-[#991B1B] text-white rounded-lg hover:bg-[#7F1D1D] transition"
           >
             Coba Lagi
           </button>
@@ -121,7 +121,7 @@ export default function ProfilPage() {
         {/* Card */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           {/* Top accent */}
-          <div className="h-2 bg-[#1e40af]" />
+          <div className="h-2 bg-[#991B1B]" />
 
           {/* Avatar + identity */}
           <div className="px-6 pt-8 pb-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 border-b border-gray-100">
@@ -133,7 +133,7 @@ export default function ProfilPage() {
             <div className="text-center sm:text-left">
               <h2 className="text-xl font-bold text-gray-900">{displayName}</h2>
               <div className="flex flex-wrap gap-2 mt-2 justify-center sm:justify-start">
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-[#1e40af]">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-[#991B1B]">
                   Alumni
                 </span>
                 {profil.alumni?.tahunLulus && (
@@ -170,7 +170,7 @@ export default function ProfilPage() {
           <div className="px-6 pb-6 pt-2">
             <Link
               href="/profil/edit"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1e40af] text-white text-sm font-medium rounded-lg hover:bg-[#1e3a8a] transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#991B1B] text-white text-sm font-medium rounded-lg hover:bg-[#7F1D1D] transition"
             >
               <svg
                 className="w-4 h-4"

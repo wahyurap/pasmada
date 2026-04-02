@@ -48,11 +48,11 @@ export default async function AlbumDetailPage({
   return (
     <>
       {/* Hero Banner */}
-      <section className="bg-[#1e40af] py-12">
+      <section className="bg-[#991B1B] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/galeri"
-            className="inline-flex items-center gap-1 text-blue-200 hover:text-white text-sm transition mb-4"
+            className="inline-flex items-center gap-1 text-red-200 hover:text-white text-sm transition mb-4"
           >
             <svg
               className="w-4 h-4"
@@ -73,7 +73,7 @@ export default async function AlbumDetailPage({
             {album.judul}
           </h1>
           {album.deskripsi && (
-            <p className="mt-2 text-blue-200">{album.deskripsi}</p>
+            <p className="mt-2 text-red-200">{album.deskripsi}</p>
           )}
           <p className="mt-2 text-sm text-blue-300">
             {album.fotos.length} foto

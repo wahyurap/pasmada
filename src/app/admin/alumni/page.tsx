@@ -177,12 +177,12 @@ export default function AdminAlumniPage() {
           placeholder="Cari nama alumni..."
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-          className="flex-1 px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+          className="flex-1 px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
         />
         <select
           value={tahunFilter}
           onChange={(e) => { setTahunFilter(e.target.value); setPage(1); }}
-          className="px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30 bg-white"
+          className="px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 bg-white"
         >
           <option value="">Semua Tahun</option>
           {tahunOptions.map((t) => (
@@ -234,7 +234,7 @@ export default function AdminAlumniPage() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => openEditModal(a)}
-                          className="px-3 py-1.5 text-xs font-medium text-[#1e40af] bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                          className="px-3 py-1.5 text-xs font-medium text-[#991B1B] bg-red-50 rounded-lg hover:bg-red-100 transition"
                         >
                           Edit
                         </button>
@@ -294,7 +294,7 @@ export default function AdminAlumniPage() {
                   value={editForm.namaLengkap}
                   onChange={(e) => setEditForm({ ...editForm, namaLengkap: e.target.value })}
                   required
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
                 />
               </div>
               <div>
@@ -308,7 +308,7 @@ export default function AdminAlumniPage() {
                   required
                   min="1950"
                   max={currentYear}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
                 />
               </div>
               <div>
@@ -319,7 +319,7 @@ export default function AdminAlumniPage() {
                   type="text"
                   value={editForm.pekerjaan}
                   onChange={(e) => setEditForm({ ...editForm, pekerjaan: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
                 />
               </div>
               <div>
@@ -330,7 +330,7 @@ export default function AdminAlumniPage() {
                   type="text"
                   value={editForm.alamat}
                   onChange={(e) => setEditForm({ ...editForm, alamat: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
                 />
               </div>
               <div>
@@ -341,7 +341,7 @@ export default function AdminAlumniPage() {
                   type="text"
                   value={editForm.noHp}
                   onChange={(e) => setEditForm({ ...editForm, noHp: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
                 />
               </div>
               {errorMsg && (
@@ -358,7 +358,7 @@ export default function AdminAlumniPage() {
                 <button
                   type="submit"
                   disabled={editLoading}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
                 >
                   {editLoading ? "Menyimpan..." : "Simpan"}
                 </button>

@@ -53,7 +53,7 @@ function VerifyEmailContent() {
     <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
       {status === "loading" && (
         <>
-          <div className="w-16 h-16 border-4 border-[#1e40af] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <div className="w-16 h-16 border-4 border-[#991B1B] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <h2 className="text-xl font-bold text-gray-900 mb-2">
             Memverifikasi Email...
           </h2>
@@ -84,7 +84,7 @@ function VerifyEmailContent() {
           <p className="text-gray-600 mb-6">{message}</p>
           <Link
             href="/login"
-            className="inline-block bg-[#1e40af] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#1e3a8a] transition"
+            className="inline-block bg-[#991B1B] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7F1D1D] transition"
           >
             Masuk ke Akun
           </Link>
@@ -114,7 +114,7 @@ function VerifyEmailContent() {
           <p className="text-gray-600 mb-6">{message}</p>
           <Link
             href="/login"
-            className="inline-block bg-[#1e40af] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#1e3a8a] transition"
+            className="inline-block bg-[#991B1B] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7F1D1D] transition"
           >
             Ke Halaman Masuk
           </Link>
@@ -129,7 +129,7 @@ export default function VerifyEmailPage() {
     <Suspense
       fallback={
         <div className="bg-white rounded-2xl shadow-lg p-8 flex justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1e40af]" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#991B1B]" />
         </div>
       }
     >

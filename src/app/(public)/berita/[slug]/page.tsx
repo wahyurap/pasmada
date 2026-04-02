@@ -35,11 +35,11 @@ export default async function BeritaDetailPage({
   return (
     <>
       {/* Hero Banner */}
-      <section className="bg-[#1e40af] py-12">
+      <section className="bg-[#991B1B] py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/berita"
-            className="inline-flex items-center gap-1 text-blue-200 hover:text-white text-sm transition mb-4"
+            className="inline-flex items-center gap-1 text-red-200 hover:text-white text-sm transition mb-4"
           >
             <svg
               className="w-4 h-4"
@@ -59,7 +59,7 @@ export default async function BeritaDetailPage({
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
             {berita.judul}
           </h1>
-          <div className="mt-4 flex items-center gap-3 text-blue-200 text-sm">
+          <div className="mt-4 flex items-center gap-3 text-red-200 text-sm">
             <span>{formatDate(berita.createdAt)}</span>
             <span>&middot;</span>
             <span>{berita.penulis}</span>
@@ -85,7 +85,7 @@ export default async function BeritaDetailPage({
           <div className="mt-12 pt-8 border-t border-gray-200">
             <Link
               href="/berita"
-              className="inline-flex items-center gap-2 text-[#1e40af] font-medium hover:underline"
+              className="inline-flex items-center gap-2 text-[#991B1B] font-medium hover:underline"
             >
               <svg
                 className="w-4 h-4"

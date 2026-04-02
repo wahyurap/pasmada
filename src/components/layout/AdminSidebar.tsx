@@ -74,11 +74,11 @@ export default function AdminSidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-gray-100">
         <Link href="/admin" className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-[#1e40af] rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-[#991B1B] rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">P</span>
           </div>
           <div>
-            <span className="text-lg font-bold text-[#1e40af]">PASMADA</span>
+            <span className="text-lg font-bold text-[#991B1B]">PASMADA</span>
             <span className="block text-xs text-gray-500">Panel Admin</span>
           </div>
         </Link>
@@ -92,8 +92,8 @@ export default function AdminSidebar() {
             href={link.href}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
               isActive(link.href)
-                ? "bg-[#1e40af] text-white"
-                : "text-gray-600 hover:bg-gray-50 hover:text-[#1e40af]"
+                ? "bg-[#991B1B] text-white"
+                : "text-gray-600 hover:bg-gray-50 hover:text-[#991B1B]"
             }`}
           >
             {link.icon}
@@ -106,7 +106,7 @@ export default function AdminSidebar() {
       <div className="p-4 border-t border-gray-100">
         <Link
           href="/"
-          className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-[#1e40af] transition"
+          className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-[#991B1B] transition"
         >
           <svg
             className="w-5 h-5"

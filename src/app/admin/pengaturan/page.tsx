@@ -125,7 +125,7 @@ export default function AdminPengaturanPage() {
   if (fetchLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1e40af]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#991B1B]"></div>
       </div>
     );
   }
@@ -167,7 +167,7 @@ export default function AdminPengaturanPage() {
               value={form.namaOrganisasi || ""}
               onChange={(e) => setField("namaOrganisasi", e.target.value)}
               placeholder="Nama organisasi alumni"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
             />
           </div>
 
@@ -180,7 +180,7 @@ export default function AdminPengaturanPage() {
               onChange={(e) => setField("deskripsi", e.target.value)}
               rows={3}
               placeholder="Deskripsi singkat organisasi"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30 resize-none"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-none"
             />
           </div>
 
@@ -193,7 +193,7 @@ export default function AdminPengaturanPage() {
               onChange={(e) => setField("sambutanKetua", e.target.value)}
               rows={6}
               placeholder="Tulis sambutan dari ketua organisasi..."
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30 resize-y"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-y"
             />
           </div>
 
@@ -211,7 +211,7 @@ export default function AdminPengaturanPage() {
               type="file"
               accept="image/*"
               onChange={(e) => setHeroImageFile(e.target.files?.[0] || null)}
-              className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-[#1e40af] hover:file:bg-blue-100"
+              className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-[#991B1B] hover:file:bg-red-100"
             />
             {heroImageFile && (
               <p className="text-xs text-gray-500 mt-1">File dipilih: {heroImageFile.name}</p>
@@ -234,7 +234,7 @@ export default function AdminPengaturanPage() {
               onChange={(e) => setField("alamat", e.target.value)}
               rows={2}
               placeholder="Alamat lengkap"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30 resize-none"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-none"
             />
           </div>
 
@@ -248,7 +248,7 @@ export default function AdminPengaturanPage() {
                 value={form.email || ""}
                 onChange={(e) => setField("email", e.target.value)}
                 placeholder="info@example.com"
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
               />
             </div>
             <div>
@@ -260,7 +260,7 @@ export default function AdminPengaturanPage() {
                 value={form.telepon || ""}
                 onChange={(e) => setField("telepon", e.target.value)}
                 placeholder="+62..."
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
               />
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function AdminPengaturanPage() {
               value={form.facebook || ""}
               onChange={(e) => setField("facebook", e.target.value)}
               placeholder="https://facebook.com/..."
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
             />
           </div>
 
@@ -300,7 +300,7 @@ export default function AdminPengaturanPage() {
               value={form.instagram || ""}
               onChange={(e) => setField("instagram", e.target.value)}
               placeholder="https://instagram.com/..."
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
             />
           </div>
 
@@ -316,7 +316,7 @@ export default function AdminPengaturanPage() {
               value={form.youtube || ""}
               onChange={(e) => setField("youtube", e.target.value)}
               placeholder="https://youtube.com/..."
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
             />
           </div>
         </div>
@@ -326,7 +326,7 @@ export default function AdminPengaturanPage() {
           <button
             type="submit"
             disabled={saveLoading}
-            className="px-6 py-2.5 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition flex items-center gap-2"
+            className="px-6 py-2.5 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition flex items-center gap-2"
           >
             {saveLoading ? (
               <>

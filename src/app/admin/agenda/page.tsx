@@ -194,7 +194,7 @@ export default function AdminAgendaPage() {
             value={form.judul}
             onChange={(e) => setForm({ ...form, judul: e.target.value })}
             required
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
           />
         </div>
         <div>
@@ -206,7 +206,7 @@ export default function AdminAgendaPage() {
             onChange={(e) => setForm({ ...form, deskripsi: e.target.value })}
             required
             rows={3}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30 resize-none"
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-none"
           />
         </div>
         <div>
@@ -218,7 +218,7 @@ export default function AdminAgendaPage() {
             value={form.tanggal}
             onChange={(e) => setForm({ ...form, tanggal: e.target.value })}
             required
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
           />
         </div>
         <div>
@@ -230,7 +230,7 @@ export default function AdminAgendaPage() {
             value={form.lokasi}
             onChange={(e) => setForm({ ...form, lokasi: e.target.value })}
             required
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
           />
         </div>
       </div>
@@ -248,7 +248,7 @@ export default function AdminAgendaPage() {
         </div>
         <button
           onClick={() => { setShowTambahModal(true); setErrorMsg(""); }}
-          className="px-4 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 transition flex items-center gap-2"
+          className="px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 transition flex items-center gap-2"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -312,7 +312,7 @@ export default function AdminAgendaPage() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => openEditModal(a)}
-                          className="px-3 py-1.5 text-xs font-medium text-[#1e40af] bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                          className="px-3 py-1.5 text-xs font-medium text-[#991B1B] bg-red-50 rounded-lg hover:bg-red-100 transition"
                         >
                           Edit
                         </button>
@@ -377,7 +377,7 @@ export default function AdminAgendaPage() {
                 <button
                   type="submit"
                   disabled={tambahLoading}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
                 >
                   {tambahLoading ? "Menyimpan..." : "Simpan"}
                 </button>
@@ -408,7 +408,7 @@ export default function AdminAgendaPage() {
                 <button
                   type="submit"
                   disabled={editLoading}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
                 >
                   {editLoading ? "Menyimpan..." : "Perbarui"}
                 </button>

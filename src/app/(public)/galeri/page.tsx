@@ -19,15 +19,17 @@ export default async function GaleriPage() {
   return (
     <>
       {/* Hero Banner */}
-      <section className="bg-[#1e40af] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative bg-[#991B1B] py-16 overflow-hidden">
+        <div className="absolute inset-0 batak-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
             Galeri
           </h1>
-          <p className="mt-3 text-blue-200 text-lg">
+          <p className="mt-3 text-red-200 text-lg">
             Dokumentasi kegiatan dan momen berharga PASMADA
           </p>
         </div>
+        <div className="batak-divider mt-6" />
       </section>
 
       <section className="py-16 bg-gray-50">
@@ -53,9 +55,9 @@ export default async function GaleriPage() {
                       className="w-full h-56 object-cover group-hover:scale-105 transition duration-300"
                     />
                   ) : (
-                    <div className="w-full h-56 bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
+                    <div className="w-full h-56 bg-gradient-to-br from-red-100 to-red-50 flex items-center justify-center">
                       <svg
-                        className="w-16 h-16 text-[#1e40af] opacity-30"
+                        className="w-16 h-16 text-[#991B1B] opacity-30"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -70,7 +72,7 @@ export default async function GaleriPage() {
                     </div>
                   )}
                   <div className="p-5">
-                    <h3 className="font-semibold text-gray-900 group-hover:text-[#1e40af] transition">
+                    <h3 className="font-semibold text-gray-900 group-hover:text-[#991B1B] transition">
                       {album.judul}
                     </h3>
                     {album.deskripsi && (

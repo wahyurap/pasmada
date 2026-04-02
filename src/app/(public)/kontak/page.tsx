@@ -13,15 +13,17 @@ export default async function KontakPage() {
   return (
     <>
       {/* Hero Banner */}
-      <section className="bg-[#1e40af] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative bg-[#991B1B] py-16 overflow-hidden">
+        <div className="absolute inset-0 batak-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
             Kontak
           </h1>
-          <p className="mt-3 text-blue-200 text-lg">
+          <p className="mt-3 text-red-200 text-lg">
             Hubungi kami untuk informasi lebih lanjut
           </p>
         </div>
+        <div className="batak-divider mt-6" />
       </section>
 
       <section className="py-16 bg-gray-50">
@@ -32,14 +34,14 @@ export default async function KontakPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 Informasi Kontak
               </h2>
-              <div className="w-16 h-1 bg-[#1e40af] mb-8 rounded-full" />
+              <div className="w-16 h-1 bg-[#991B1B] mb-8 rounded-full" />
 
               <div className="space-y-6">
                 {settings?.alamat && (
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-[#1e40af]/10 rounded-lg flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 bg-[#991B1B]/10 rounded-lg flex items-center justify-center shrink-0">
                       <svg
-                        className="w-5 h-5 text-[#1e40af]"
+                        className="w-5 h-5 text-[#991B1B]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -67,9 +69,9 @@ export default async function KontakPage() {
 
                 {settings?.email && (
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-[#1e40af]/10 rounded-lg flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 bg-[#991B1B]/10 rounded-lg flex items-center justify-center shrink-0">
                       <svg
-                        className="w-5 h-5 text-[#1e40af]"
+                        className="w-5 h-5 text-[#991B1B]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -91,9 +93,9 @@ export default async function KontakPage() {
 
                 {settings?.telepon && (
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-[#1e40af]/10 rounded-lg flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 bg-[#991B1B]/10 rounded-lg flex items-center justify-center shrink-0">
                       <svg
-                        className="w-5 h-5 text-[#1e40af]"
+                        className="w-5 h-5 text-[#991B1B]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -115,9 +117,9 @@ export default async function KontakPage() {
 
                 {(settings?.facebook || settings?.instagram || settings?.youtube) && (
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-[#1e40af]/10 rounded-lg flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 bg-[#991B1B]/10 rounded-lg flex items-center justify-center shrink-0">
                       <svg
-                        className="w-5 h-5 text-[#1e40af]"
+                        className="w-5 h-5 text-[#991B1B]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -140,7 +142,7 @@ export default async function KontakPage() {
                             href={settings.facebook}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-500 hover:text-[#1e40af] transition"
+                            className="text-gray-500 hover:text-[#991B1B] transition"
                           >
                             Facebook
                           </a>
@@ -150,7 +152,7 @@ export default async function KontakPage() {
                             href={settings.instagram}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-500 hover:text-[#1e40af] transition"
+                            className="text-gray-500 hover:text-[#991B1B] transition"
                           >
                             Instagram
                           </a>
@@ -160,7 +162,7 @@ export default async function KontakPage() {
                             href={settings.youtube}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-500 hover:text-[#1e40af] transition"
+                            className="text-gray-500 hover:text-[#991B1B] transition"
                           >
                             YouTube
                           </a>
@@ -194,7 +196,7 @@ export default async function KontakPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 Kirim Pesan
               </h2>
-              <div className="w-16 h-1 bg-[#1e40af] mb-8 rounded-full" />
+              <div className="w-16 h-1 bg-[#991B1B] mb-8 rounded-full" />
 
               <form className="space-y-6">
                 <div>
@@ -208,7 +210,7 @@ export default async function KontakPage() {
                     type="text"
                     id="nama"
                     name="nama"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
                     placeholder="Masukkan nama lengkap"
                   />
                 </div>
@@ -224,7 +226,7 @@ export default async function KontakPage() {
                     type="email"
                     id="email"
                     name="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
                     placeholder="Masukkan alamat email"
                   />
                 </div>
@@ -240,7 +242,7 @@ export default async function KontakPage() {
                     type="text"
                     id="subjek"
                     name="subjek"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
                     placeholder="Subjek pesan"
                   />
                 </div>
@@ -256,14 +258,14 @@ export default async function KontakPage() {
                     id="pesan"
                     name="pesan"
                     rows={5}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition resize-none"
                     placeholder="Tulis pesan Anda"
                   />
                 </div>
 
                 <button
                   type="button"
-                  className="w-full px-6 py-3 text-base font-semibold text-white bg-[#1e40af] rounded-lg hover:bg-[#1e3a8a] transition"
+                  className="w-full px-6 py-3 text-base font-semibold text-white bg-[#991B1B] rounded-lg hover:bg-[#7F1D1D] transition"
                 >
                   Kirim Pesan
                 </button>

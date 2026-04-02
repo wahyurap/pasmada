@@ -107,7 +107,7 @@ export default function EditProfilPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-[#1e40af] border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#991B1B] border-t-transparent rounded-full animate-spin" />
           <p className="text-sm text-gray-500">Memuat data profil...</p>
         </div>
       </div>
@@ -127,7 +127,7 @@ export default function EditProfilPage() {
 
         {/* Card */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="h-2 bg-[#1e40af]" />
+          <div className="h-2 bg-[#991B1B]" />
 
           <form onSubmit={handleSubmit} className="px-6 py-8 space-y-5">
             {/* Success message */}
@@ -188,7 +188,7 @@ export default function EditProfilPage() {
                 value={form.namaLengkap}
                 onChange={handleChange}
                 placeholder="Masukkan nama lengkap"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B] focus:border-transparent"
               />
             </div>
 
@@ -205,7 +205,7 @@ export default function EditProfilPage() {
                 name="tahunLulus"
                 value={form.tahunLulus}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-transparent bg-white"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B] focus:border-transparent bg-white"
               >
                 <option value="">-- Pilih Tahun Lulus --</option>
                 {tahunOptions.map((y) => (
@@ -231,7 +231,7 @@ export default function EditProfilPage() {
                 value={form.pekerjaan}
                 onChange={handleChange}
                 placeholder="Contoh: Software Engineer di PT. XYZ"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B] focus:border-transparent"
               />
             </div>
 
@@ -250,7 +250,7 @@ export default function EditProfilPage() {
                 value={form.alamat}
                 onChange={handleChange}
                 placeholder="Masukkan alamat tinggal saat ini"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-transparent resize-none"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B] focus:border-transparent resize-none"
               />
             </div>
 
@@ -269,7 +269,7 @@ export default function EditProfilPage() {
                 value={form.noHp}
                 onChange={handleChange}
                 placeholder="Contoh: 08123456789"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B] focus:border-transparent"
               />
             </div>
 
@@ -278,7 +278,7 @@ export default function EditProfilPage() {
               <button
                 type="submit"
                 disabled={submitting || success}
-                className="flex items-center gap-2 px-6 py-2.5 bg-[#1e40af] text-white text-sm font-medium rounded-lg hover:bg-[#1e3a8a] disabled:opacity-60 disabled:cursor-not-allowed transition"
+                className="flex items-center gap-2 px-6 py-2.5 bg-[#991B1B] text-white text-sm font-medium rounded-lg hover:bg-[#7F1D1D] disabled:opacity-60 disabled:cursor-not-allowed transition"
               >
                 {submitting && (
                   <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

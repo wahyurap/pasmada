@@ -106,16 +106,18 @@ export default function AlumniPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="bg-[#1e40af] py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative bg-[#991B1B] py-14 overflow-hidden">
+        <div className="absolute inset-0 batak-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
             Direktori Alumni
           </h1>
-          <p className="mt-3 text-blue-200 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="mt-3 text-red-200 text-base sm:text-lg max-w-2xl mx-auto">
             Fitur ini hanya tersedia untuk anggota terdaftar. Temukan dan
             terhubung kembali dengan sesama alumni PASMADA.
           </p>
         </div>
+        <div className="batak-divider mt-6" />
       </section>
 
       <section className="py-10">
@@ -142,7 +144,7 @@ export default function AlumniPage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Cari nama alumni..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B] focus:border-transparent"
               />
             </div>
 
@@ -150,7 +152,7 @@ export default function AlumniPage() {
             <select
               value={tahun}
               onChange={(e) => setTahun(e.target.value)}
-              className="sm:w-48 px-3 py-2.5 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+              className="sm:w-48 px-3 py-2.5 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B] focus:border-transparent"
             >
               <option value="">Semua Angkatan</option>
               {tahunOptions.map((y) => (

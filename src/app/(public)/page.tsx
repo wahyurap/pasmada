@@ -42,19 +42,22 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative bg-[#1e40af] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1e40af] via-[#1e3a8a] to-[#0f1d4a]" />
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)", backgroundSize: "24px 24px"}} />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40 text-center">
+      <section className="relative bg-[#7F1D1D] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A]" />
+        <div className="absolute inset-0 batak-pattern" />
+        {/* Gold accent top line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-[#D97706]" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36 text-center">
+          <div className="flex justify-center mb-6">
+            <img src="/logo.png" alt="PASMADA" className="h-24 w-auto drop-shadow-lg" />
+          </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
             PASMADA
           </h1>
-          <p className="mt-4 text-xl sm:text-2xl text-blue-200 font-medium">
+          <p className="mt-3 text-xl sm:text-2xl text-[#D97706] font-semibold">
             Parsadaan Alumni SMAN Sada
           </p>
-          <p className="mt-4 text-lg text-blue-100 max-w-2xl mx-auto">
+          <p className="mt-4 text-base text-red-100 max-w-2xl mx-auto">
             Wadah silaturahmi dan komunikasi antar alumni SMAN 1 Panyabungan,
             Mandailing Natal, Sumatera Utara untuk mempererat tali persaudaraan
             dan berkontribusi bagi almamater.
@@ -62,7 +65,7 @@ export default async function HomePage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/alumni"
-              className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-[#1e40af] bg-white rounded-lg hover:bg-blue-50 transition"
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-[#7F1D1D] bg-[#D97706] rounded-lg hover:bg-amber-500 transition"
             >
               Cari Alumni
             </Link>
@@ -74,6 +77,8 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
+        {/* Batak decorative bottom border */}
+        <div className="batak-divider" />
       </section>
 
       {/* Sambutan Ketua */}
@@ -83,8 +88,8 @@ export default async function HomePage() {
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-2">
               Sambutan Ketua
             </h2>
-            <div className="w-16 h-1 bg-[#1e40af] mx-auto mb-8 rounded-full" />
-            <div className="bg-blue-50 rounded-2xl p-8 border border-blue-100">
+            <div className="w-16 h-1 bg-[#991B1B] mx-auto mb-8 rounded-full" />
+            <div className="bg-red-50 rounded-2xl p-8 border border-red-100">
               <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
                 {settings.sambutanKetua}
               </div>
@@ -102,7 +107,7 @@ export default async function HomePage() {
                 key={stat.label}
                 className="bg-white rounded-xl p-6 text-center shadow-sm border border-gray-100"
               >
-                <div className="text-3xl sm:text-4xl font-extrabold text-[#1e40af]">
+                <div className="text-3xl sm:text-4xl font-extrabold text-[#991B1B]">
                   {stat.value}
                 </div>
                 <div className="mt-2 text-sm text-gray-600 font-medium">
@@ -123,11 +128,11 @@ export default async function HomePage() {
                 <h2 className="text-3xl font-bold text-gray-900">
                   Berita Terbaru
                 </h2>
-                <div className="w-16 h-1 bg-[#1e40af] mt-2 rounded-full" />
+                <div className="w-16 h-1 bg-[#991B1B] mt-2 rounded-full" />
               </div>
               <Link
                 href="/berita"
-                className="text-[#1e40af] font-medium hover:underline text-sm"
+                className="text-[#991B1B] font-medium hover:underline text-sm"
               >
                 Lihat Semua &rarr;
               </Link>
@@ -146,8 +151,8 @@ export default async function HomePage() {
                       className="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
                     />
                   ) : (
-                    <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
-                      <span className="text-[#1e40af] text-4xl font-bold opacity-30">
+                    <div className="w-full h-48 bg-gradient-to-br from-red-100 to-red-50 flex items-center justify-center">
+                      <span className="text-[#991B1B] text-4xl font-bold opacity-30">
                         P
                       </span>
                     </div>
@@ -156,7 +161,7 @@ export default async function HomePage() {
                     <p className="text-xs text-gray-500 mb-2">
                       {formatDate(berita.createdAt)}
                     </p>
-                    <h3 className="font-semibold text-gray-900 group-hover:text-[#1e40af] transition line-clamp-2">
+                    <h3 className="font-semibold text-gray-900 group-hover:text-[#991B1B] transition line-clamp-2">
                       {berita.judul}
                     </h3>
                     {berita.ringkasan && (
@@ -181,11 +186,11 @@ export default async function HomePage() {
                 <h2 className="text-3xl font-bold text-gray-900">
                   Agenda Mendatang
                 </h2>
-                <div className="w-16 h-1 bg-[#1e40af] mt-2 rounded-full" />
+                <div className="w-16 h-1 bg-[#991B1B] mt-2 rounded-full" />
               </div>
               <Link
                 href="/agenda"
-                className="text-[#1e40af] font-medium hover:underline text-sm"
+                className="text-[#991B1B] font-medium hover:underline text-sm"
               >
                 Lihat Semua &rarr;
               </Link>
@@ -197,7 +202,7 @@ export default async function HomePage() {
                   className="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-md transition"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-14 h-14 bg-[#1e40af] rounded-lg flex flex-col items-center justify-center text-white">
+                    <div className="flex-shrink-0 w-14 h-14 bg-[#991B1B] rounded-lg flex flex-col items-center justify-center text-white">
                       <span className="text-lg font-bold leading-none">
                         {new Date(agenda.tanggal).getDate()}
                       </span>

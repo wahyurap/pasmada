@@ -79,7 +79,7 @@ function LoginForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="alamat@email.com"
           />
         </div>
@@ -97,7 +97,7 @@ function LoginForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Masukkan password"
           />
         </div>
@@ -105,7 +105,7 @@ function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#1e40af] text-white py-2.5 rounded-lg font-medium hover:bg-[#1e3a8a] transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-[#991B1B] text-white py-2.5 rounded-lg font-medium hover:bg-[#7F1D1D] transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Memproses..." : "Masuk"}
         </button>
@@ -115,7 +115,7 @@ function LoginForm() {
         Belum punya akun?{" "}
         <Link
           href="/register"
-          className="text-[#1e40af] font-medium hover:underline"
+          className="text-[#991B1B] font-medium hover:underline"
         >
           Daftar di sini
         </Link>
@@ -129,7 +129,7 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <div className="bg-white rounded-2xl shadow-lg p-8 flex justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1e40af]" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#991B1B]" />
         </div>
       }
     >

@@ -25,15 +25,17 @@ export default async function AgendaPage() {
   return (
     <>
       {/* Hero Banner */}
-      <section className="bg-[#1e40af] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative bg-[#991B1B] py-16 overflow-hidden">
+        <div className="absolute inset-0 batak-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
             Agenda
           </h1>
-          <p className="mt-3 text-blue-200 text-lg">
+          <p className="mt-3 text-red-200 text-lg">
             Jadwal kegiatan dan acara PASMADA
           </p>
         </div>
+        <div className="batak-divider mt-6" />
       </section>
 
       {/* Agenda Mendatang */}
@@ -42,7 +44,7 @@ export default async function AgendaPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Agenda Mendatang
           </h2>
-          <div className="w-16 h-1 bg-[#1e40af] mb-8 rounded-full" />
+          <div className="w-16 h-1 bg-[#991B1B] mb-8 rounded-full" />
 
           {agendaMendatang.length === 0 ? (
             <p className="text-gray-500 py-8 text-center">
@@ -53,9 +55,9 @@ export default async function AgendaPage() {
               {agendaMendatang.map((agenda: typeof agendaMendatang[number]) => (
                 <div
                   key={agenda.id}
-                  className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-100"
+                  className="flex items-start gap-4 p-6 bg-red-50 rounded-xl border border-red-100"
                 >
-                  <div className="flex-shrink-0 w-16 h-16 bg-[#1e40af] rounded-lg flex flex-col items-center justify-center text-white">
+                  <div className="flex-shrink-0 w-16 h-16 bg-[#991B1B] rounded-lg flex flex-col items-center justify-center text-white">
                     <span className="text-xl font-bold leading-none">
                       {new Date(agenda.tanggal).getDate()}
                     </span>
@@ -127,7 +129,7 @@ export default async function AgendaPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               Agenda Sebelumnya
             </h2>
-            <div className="w-16 h-1 bg-[#1e40af] mb-8 rounded-full" />
+            <div className="w-16 h-1 bg-[#991B1B] mb-8 rounded-full" />
 
             <div className="space-y-4">
               {agendaSebelumnya.map((agenda: typeof agendaSebelumnya[number]) => (

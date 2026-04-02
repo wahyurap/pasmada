@@ -112,7 +112,7 @@ export default function AdminBeritaPage() {
         </div>
         <Link
           href="/admin/berita/tambah"
-          className="px-4 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 transition flex items-center gap-2"
+          className="px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 transition flex items-center gap-2"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -186,7 +186,7 @@ export default function AdminBeritaPage() {
                       <div className="flex gap-2 flex-wrap">
                         <Link
                           href={`/admin/berita/${b.id}/edit`}
-                          className="px-3 py-1.5 text-xs font-medium text-[#1e40af] bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                          className="px-3 py-1.5 text-xs font-medium text-[#991B1B] bg-red-50 rounded-lg hover:bg-red-100 transition"
                         >
                           Edit
                         </Link>

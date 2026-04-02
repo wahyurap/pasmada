@@ -95,7 +95,7 @@ export default function RegisterPage() {
         </p>
         <Link
           href="/login"
-          className="inline-block bg-[#1e40af] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#1e3a8a] transition"
+          className="inline-block bg-[#991B1B] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7F1D1D] transition"
         >
           Ke Halaman Masuk
         </Link>
@@ -130,7 +130,7 @@ export default function RegisterPage() {
             required
             value={form.nama}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Nama panggilan"
           />
         </div>
@@ -149,7 +149,7 @@ export default function RegisterPage() {
             required
             value={form.namaLengkap}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Nama lengkap Anda"
           />
         </div>
@@ -168,7 +168,7 @@ export default function RegisterPage() {
             required
             value={form.email}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="alamat@email.com"
           />
         </div>
@@ -185,7 +185,7 @@ export default function RegisterPage() {
             name="tahunLulus"
             value={form.tahunLulus}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition bg-white"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition bg-white"
           >
             <option value="">Pilih tahun lulus</option>
             {years.map((year) => (
@@ -210,7 +210,7 @@ export default function RegisterPage() {
             required
             value={form.password}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Minimal 8 karakter"
           />
         </div>
@@ -229,7 +229,7 @@ export default function RegisterPage() {
             required
             value={form.konfirmasiPassword}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Ulangi password"
           />
         </div>
@@ -237,7 +237,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#1e40af] text-white py-2.5 rounded-lg font-medium hover:bg-[#1e3a8a] transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-[#991B1B] text-white py-2.5 rounded-lg font-medium hover:bg-[#7F1D1D] transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Memproses..." : "Daftar"}
         </button>
@@ -247,7 +247,7 @@ export default function RegisterPage() {
         Sudah punya akun?{" "}
         <Link
           href="/login"
-          className="text-[#1e40af] font-medium hover:underline"
+          className="text-[#991B1B] font-medium hover:underline"
         >
           Masuk di sini
         </Link>

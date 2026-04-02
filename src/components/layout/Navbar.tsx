@@ -26,13 +26,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+    <nav className="sticky top-0 z-50 bg-white shadow-sm border-b-2 border-[#D97706]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <img src="/logo.png" alt="PASMADA" className="h-10 w-auto" />
-            <span className="text-xl font-bold text-[#1e40af]">PASMADA</span>
+            <span className="text-xl font-bold text-[#991B1B]">PASMADA</span>
           </Link>
 
           {/* Desktop nav */}
@@ -43,8 +43,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition ${
                   isActive(link.href)
-                    ? "text-[#1e40af] bg-blue-50"
-                    : "text-gray-600 hover:text-[#1e40af] hover:bg-gray-50"
+                    ? "text-[#991B1B] bg-red-50"
+                    : "text-gray-600 hover:text-[#991B1B] hover:bg-gray-50"
                 }`}
               >
                 {link.label}
@@ -55,8 +55,8 @@ export default function Navbar() {
                 href="/alumni"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition ${
                   isActive("/alumni")
-                    ? "text-[#1e40af] bg-blue-50"
-                    : "text-gray-600 hover:text-[#1e40af] hover:bg-gray-50"
+                    ? "text-[#991B1B] bg-red-50"
+                    : "text-gray-600 hover:text-[#991B1B] hover:bg-gray-50"
                 }`}
               >
                 Cari Alumni
@@ -72,7 +72,7 @@ export default function Navbar() {
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
                 >
-                  <div className="w-8 h-8 bg-[#1e40af] rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#991B1B] rounded-full flex items-center justify-center">
                     <span className="text-white text-xs font-bold">
                       {session.user.name?.charAt(0).toUpperCase() || "U"}
                     </span>
@@ -125,13 +125,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="px-4 py-2 text-sm font-medium text-[#1e40af] hover:bg-blue-50 rounded-lg transition"
+                  className="px-4 py-2 text-sm font-medium text-[#991B1B] hover:bg-red-50 rounded-lg transition"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 text-sm font-medium text-white bg-[#1e40af] hover:bg-[#1e3a8a] rounded-lg transition"
+                  className="px-4 py-2 text-sm font-medium text-white bg-[#991B1B] hover:bg-[#7F1D1D] rounded-lg transition"
                 >
                   Daftar
                 </Link>
@@ -181,7 +181,7 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                   isActive(link.href)
-                    ? "text-[#1e40af] bg-blue-50"
+                    ? "text-[#991B1B] bg-red-50"
                     : "text-gray-600 hover:bg-gray-50"
                 }`}
               >
@@ -194,7 +194,7 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                   isActive("/alumni")
-                    ? "text-[#1e40af] bg-blue-50"
+                    ? "text-[#991B1B] bg-red-50"
                     : "text-gray-600 hover:bg-gray-50"
                 }`}
               >
@@ -206,7 +206,7 @@ export default function Navbar() {
             {session ? (
               <div className="space-y-1">
                 <div className="flex items-center gap-2 px-3 py-2">
-                  <div className="w-8 h-8 bg-[#1e40af] rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#991B1B] rounded-full flex items-center justify-center">
                     <span className="text-white text-xs font-bold">
                       {session.user.name?.charAt(0).toUpperCase() || "U"}
                     </span>
@@ -243,14 +243,14 @@ export default function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setMobileOpen(false)}
-                  className="flex-1 text-center px-4 py-2 text-sm font-medium text-[#1e40af] border border-[#1e40af] rounded-lg hover:bg-blue-50 transition"
+                  className="flex-1 text-center px-4 py-2 text-sm font-medium text-[#991B1B] border border-[#991B1B] rounded-lg hover:bg-red-50 transition"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMobileOpen(false)}
-                  className="flex-1 text-center px-4 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-[#1e3a8a] transition"
+                  className="flex-1 text-center px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-[#7F1D1D] transition"
                 >
                   Daftar
                 </Link>

@@ -143,7 +143,7 @@ export default function AdminAlbumDetailPage({
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1e40af]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#991B1B]"></div>
       </div>
     );
   }
@@ -152,7 +152,7 @@ export default function AdminAlbumDetailPage({
     return (
       <div className="text-center py-20">
         <p className="text-gray-500 text-lg">Album tidak ditemukan</p>
-        <Link href="/admin/galeri" className="mt-4 inline-block text-[#1e40af] hover:underline text-sm">
+        <Link href="/admin/galeri" className="mt-4 inline-block text-[#991B1B] hover:underline text-sm">
           Kembali ke galeri
         </Link>
       </div>
@@ -165,7 +165,7 @@ export default function AdminAlbumDetailPage({
       <div className="flex items-center gap-3">
         <Link
           href="/admin/galeri"
-          className="p-2 text-gray-500 hover:text-[#1e40af] hover:bg-blue-50 rounded-lg transition"
+          className="p-2 text-gray-500 hover:text-[#991B1B] hover:bg-red-50 rounded-lg transition"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -206,7 +206,7 @@ export default function AdminAlbumDetailPage({
               multiple
               onChange={(e) => setSelectedFiles(e.target.files)}
               required
-              className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-[#1e40af] hover:file:bg-blue-100"
+              className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-[#991B1B] hover:file:bg-red-100"
             />
             {selectedFiles && selectedFiles.length > 0 && (
               <p className="text-xs text-gray-500 mt-1">
@@ -223,13 +223,13 @@ export default function AdminAlbumDetailPage({
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
               placeholder="Caption untuk foto (opsional)"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
             />
           </div>
           {uploadLoading && uploadProgress > 0 && (
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-[#1e40af] h-2 rounded-full transition-all"
+                className="bg-[#991B1B] h-2 rounded-full transition-all"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>
@@ -237,7 +237,7 @@ export default function AdminAlbumDetailPage({
           <button
             type="submit"
             disabled={uploadLoading || !selectedFiles || selectedFiles.length === 0}
-            className="px-5 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
+            className="px-5 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
           >
             {uploadLoading ? `Mengupload... ${uploadProgress}%` : "Upload Foto"}
           </button>

@@ -113,7 +113,7 @@ export default function EditBeritaPage({
   if (fetchLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1e40af]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#991B1B]"></div>
       </div>
     );
   }
@@ -122,7 +122,7 @@ export default function EditBeritaPage({
     return (
       <div className="text-center py-20">
         <p className="text-gray-500 text-lg">Berita tidak ditemukan</p>
-        <Link href="/admin/berita" className="mt-4 inline-block text-[#1e40af] hover:underline text-sm">
+        <Link href="/admin/berita" className="mt-4 inline-block text-[#991B1B] hover:underline text-sm">
           Kembali ke daftar berita
         </Link>
       </div>
@@ -134,7 +134,7 @@ export default function EditBeritaPage({
       <div className="flex items-center gap-3">
         <Link
           href="/admin/berita"
-          className="p-2 text-gray-500 hover:text-[#1e40af] hover:bg-blue-50 rounded-lg transition"
+          className="p-2 text-gray-500 hover:text-[#991B1B] hover:bg-red-50 rounded-lg transition"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -162,7 +162,7 @@ export default function EditBeritaPage({
             value={form.judul}
             onChange={(e) => setForm({ ...form, judul: e.target.value })}
             required
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
           />
         </div>
 
@@ -174,7 +174,7 @@ export default function EditBeritaPage({
             type="text"
             value={form.penulis}
             onChange={(e) => setForm({ ...form, penulis: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30"
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
           />
         </div>
 
@@ -190,7 +190,7 @@ export default function EditBeritaPage({
             onChange={(e) => setForm({ ...form, ringkasan: e.target.value.slice(0, 200) })}
             rows={3}
             maxLength={200}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30 resize-none"
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-none"
           />
         </div>
 
@@ -203,7 +203,7 @@ export default function EditBeritaPage({
             onChange={(e) => setForm({ ...form, konten: e.target.value })}
             required
             rows={12}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e40af]/30 resize-y"
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-y"
           />
         </div>
 
@@ -221,7 +221,7 @@ export default function EditBeritaPage({
             type="file"
             accept="image/*"
             onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-            className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-[#1e40af] hover:file:bg-blue-100"
+            className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-[#991B1B] hover:file:bg-red-100"
           />
           {imageFile && (
             <p className="text-xs text-gray-500 mt-1">File dipilih: {imageFile.name}</p>
@@ -235,7 +235,7 @@ export default function EditBeritaPage({
             aria-checked={form.published}
             onClick={() => setForm({ ...form, published: !form.published })}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
-              form.published ? "bg-[#1e40af]" : "bg-gray-200"
+              form.published ? "bg-[#991B1B]" : "bg-gray-200"
             }`}
           >
             <span
@@ -259,7 +259,7 @@ export default function EditBeritaPage({
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#1e40af] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
+            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
           >
             {loading ? "Menyimpan..." : "Perbarui Berita"}
           </button>
