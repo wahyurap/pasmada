@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function VerifyEmailPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ token?: string }>;
-}) {
-  const { token } = use(searchParams);
+function VerifyEmailContent() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     "loading"
   );
@@ -33,9 +32,7 @@ export default function VerifyEmailPage({
 
         if (res.ok) {
           setStatus("success");
-          setMessage(
-            data.message || "Email berhasil diverifikasi!"
-          );
+          setMessage(data.message || "Email berhasil diverifikasi!");
         } else {
           setStatus("error");
           setMessage(
@@ -124,5 +121,19 @@ export default function VerifyEmailPage({
         </>
       )}
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-white rounded-2xl shadow-lg p-8 flex justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1e40af]" />
+        </div>
+      }
+    >
+      <VerifyEmailContent />
+    </Suspense>
   );
 }
