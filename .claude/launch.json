@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "pasmada-dev",
+      "runtimeExecutable": "/Users/mac/.nvm/versions/node/v22.22.1/bin/node",
+      "runtimeArgs": ["/Users/mac/.nvm/versions/node/v22.22.1/bin/npm", "run", "dev"],
+      "port": 3000,
+      "cwd": "/Users/mac/pasmada"
+    }
+  ]
+}

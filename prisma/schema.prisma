@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ALUMNI
+  ADMIN
+}
+
+model User {
+  id              String    @id @default(cuid())
+  nama            String
+  email           String    @unique
+  password        String
+  emailVerified   DateTime?
+  verifyToken     String?   @unique
+  verifyExpires   DateTime?
+  resetToken      String?   @unique
+  resetExpires    DateTime?
+  role            Role      @default(ALUMNI)
+  alumni          Alumni?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([email])
+  @@index([verifyToken])
+}
+
+model Alumni {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  namaLengkap  String
+  tahunLulus   Int
+  pekerjaan    String?
+  alamat       String?
+  noHp         String?
+  foto         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([tahunLulus])
+  @@index([namaLengkap])
+}
+
+model Berita {
+  id        String   @id @default(cuid())
+  judul     String
+  slug      String   @unique
+  konten    String   @db.Text
+  ringkasan String?
+  gambar    String?
+  penulis   String
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([published, createdAt])
+}
+
+model Agenda {
+  id        String   @id @default(cuid())
+  judul     String
+  deskripsi String   @db.Text
+  tanggal   DateTime
+  lokasi    String
+  gambar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tanggal])
+}
+
+model Album {
+  id         String   @id @default(cuid())
+  judul      String
+  deskripsi  String?
+  coverImage String?
+  fotos      Foto[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Foto {
+  id        String   @id @default(cuid())
+  albumId   String
+  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  url       String
+  caption   String?
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id              String @id @default("default")
+  namaOrganisasi  String @default("PASMADA")
+  deskripsi       String @default("Parsadaan Alumni SMAN Sada - Organisasi Alumni SMAN 1 Panyabungan")
+  sambutanKetua   String @default("") @db.Text
+  heroImage       String?
+  alamat          String @default("")
+  email           String @default("")
+  telepon         String @default("")
+  facebook        String?
+  instagram       String?
+  youtube         String?
+}
