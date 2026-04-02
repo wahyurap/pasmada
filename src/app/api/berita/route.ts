@@ -12,12 +12,16 @@ function slugify(text: string): string {
 
 export async function GET(request: NextRequest) {
   try {
+    const session = await auth();
+    const isAdmin = (session?.user as { role?: string })?.role === "ADMIN";
+
     const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
 
-    const where = { published: true };
+    // Admins can see all berita (including drafts); public only sees published
+    const where = isAdmin ? {} : { published: true };
 
     const [berita, total] = await Promise.all([
       prisma.berita.findMany({

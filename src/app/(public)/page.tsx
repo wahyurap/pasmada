@@ -45,7 +45,7 @@ export default async function HomePage() {
       <section className="relative bg-[#1e40af] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1e40af] via-[#1e3a8a] to-[#0f1d4a]" />
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center" />
+          <div className="absolute inset-0" style={{backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)", backgroundSize: "24px 24px"}} />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40 text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">

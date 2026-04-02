@@ -19,10 +19,18 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
 
-    const where: Record<string, unknown> = {};
+    type AlumniWhere = {
+      tahunLulus?: number;
+      OR?: Array<Record<string, { contains: string; mode: string }>>;
+    };
+    const where: AlumniWhere = {};
 
     if (q) {
-      where.namaLengkap = { contains: q, mode: "insensitive" };
+      where.OR = [
+        { namaLengkap: { contains: q, mode: "insensitive" } },
+        { pekerjaan: { contains: q, mode: "insensitive" } },
+        { alamat: { contains: q, mode: "insensitive" } },
+      ];
     }
 
     if (tahun) {

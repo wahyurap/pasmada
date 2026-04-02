@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 
 const protectedPaths = ["/alumni", "/profil"];
 const adminPaths = ["/admin"];
 
-export async function proxy(request: Request) {
-  const { pathname } = new URL(request.url);
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
   const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
   const isAdmin = adminPaths.some((p) => pathname.startsWith(p));
@@ -19,7 +20,7 @@ export async function proxy(request: Request) {
       return NextResponse.redirect(loginUrl);
     }
 
-    if (isAdmin && session.user.role !== "ADMIN") {
+    if (isAdmin && (session.user as { role: string }).role !== "ADMIN") {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }

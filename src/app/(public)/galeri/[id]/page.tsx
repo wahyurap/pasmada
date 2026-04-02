@@ -9,7 +9,16 @@ export default async function AlbumDetailPage({
 }) {
   const { id } = await params;
 
-  let album: Awaited<ReturnType<typeof prisma.album.findUnique<{ include: { fotos: true } }>>> | null = null;
+  type AlbumWithFotos = {
+    id: string;
+    judul: string;
+    deskripsi: string | null;
+    coverImage: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    fotos: Array<{ id: string; url: string; caption: string | null; createdAt: Date }>;
+  };
+  let album: AlbumWithFotos | null = null;
   let dbError = false;
   try {
     album = await prisma.album.findUnique({
@@ -19,7 +28,7 @@ export default async function AlbumDetailPage({
           orderBy: { createdAt: "desc" },
         },
       },
-    });
+    }) as AlbumWithFotos | null;
   } catch {
     dbError = true;
   }
