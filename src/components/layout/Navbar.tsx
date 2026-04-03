@@ -102,21 +102,32 @@ export default function Navbar() {
                     >
                       Profil
                     </Link>
-                    <Link
-                      href="/pengajuan"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                    >
-                      Pengajuan Konten
-                    </Link>
-                    {session.user.role === "ADMIN" && (
+                    {session.user.role !== "ADMIN" && (
                       <Link
-                        href="/admin"
+                        href="/pengajuan"
                         onClick={() => setUserMenuOpen(false)}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                       >
-                        Admin
+                        Pengajuan Konten
                       </Link>
+                    )}
+                    {session.user.role === "ADMIN" && (
+                      <>
+                        <Link
+                          href="/admin"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        >
+                          Panel Admin
+                        </Link>
+                        <Link
+                          href="/admin/submissions"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        >
+                          Review Pengajuan
+                        </Link>
+                      </>
                     )}
                     <hr className="my-1 border-gray-100" />
                     <button
@@ -229,21 +240,32 @@ export default function Navbar() {
                 >
                   Profil
                 </Link>
-                <Link
-                  href="/pengajuan"
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
-                >
-                  Pengajuan Konten
-                </Link>
-                {session.user.role === "ADMIN" && (
+                {session.user.role !== "ADMIN" && (
                   <Link
-                    href="/admin"
+                    href="/pengajuan"
                     onClick={() => setMobileOpen(false)}
                     className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
                   >
-                    Admin
+                    Pengajuan Konten
                   </Link>
+                )}
+                {session.user.role === "ADMIN" && (
+                  <>
+                    <Link
+                      href="/admin"
+                      onClick={() => setMobileOpen(false)}
+                      className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
+                    >
+                      Panel Admin
+                    </Link>
+                    <Link
+                      href="/admin/submissions"
+                      onClick={() => setMobileOpen(false)}
+                      className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
+                    >
+                      Review Pengajuan
+                    </Link>
+                  </>
                 )}
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
