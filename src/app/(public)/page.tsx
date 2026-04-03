@@ -2,6 +2,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   let settings = null, alumniCount = 0, angkatanCount = 0, beritaCount = 0, agendaCount = 0;
   let beritaTerbaru: Array<{ id: string; slug: string; judul: string; ringkasan: string | null; gambar: string | null; createdAt: Date }> = [];

@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default async function AgendaPage() {
   const now = new Date();
 

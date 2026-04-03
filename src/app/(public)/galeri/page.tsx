@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export default async function GaleriPage() {
   let albums: Awaited<ReturnType<typeof prisma.album.findMany<{ include: { _count: { select: { fotos: true } } } }>>> = [];
   try {

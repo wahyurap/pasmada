@@ -2,6 +2,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 const PER_PAGE = 9;
 
 export default async function BeritaPage({
