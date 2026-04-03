@@ -97,15 +97,20 @@ model Foto {
 }
 
 model SiteSettings {
-  id              String @id @default("default")
-  namaOrganisasi  String @default("PASMADA")
-  deskripsi       String @default("Parsadaan Alumni SMAN Sada - Organisasi Alumni SMAN 1 Panyabungan")
-  sambutanKetua   String @default("") @db.Text
-  heroImage       String?
-  alamat          String @default("")
-  email           String @default("")
-  telepon         String @default("")
-  facebook        String?
-  instagram       String?
-  youtube         String?
+  id                  String @id @default("default")
+  namaOrganisasi      String @default("PASMADA")
+  deskripsi           String @default("Parsadaan Alumni SMAN Sada - Organisasi Alumni SMAN 1 Panyabungan")
+  sambutanKetua       String @default("") @db.Text
+  heroImage           String?
+  alamat              String @default("")
+  email               String @default("")
+  telepon             String @default("")
+  facebook            String?
+  instagram           String?
+  youtube             String?
+  // Halaman Tentang
+  sejarah             String @default("") @db.Text
+  visi                String @default("") @db.Text
+  misi                String @default("") @db.Text
+  strukturOrganisasi  String @default("[]") @db.Text
 }

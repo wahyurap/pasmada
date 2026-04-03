@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+interface OrgMember { jabatan: string; nama: string }
+
 interface Settings {
   namaOrganisasi: string;
   deskripsi: string;
@@ -12,6 +14,10 @@ interface Settings {
   facebook: string;
   instagram: string;
   youtube: string;
+  sejarah: string;
+  visi: string;
+  misi: string;
+  strukturOrganisasi: OrgMember[];
 }
 
 const empty: Settings = {
@@ -24,6 +30,17 @@ const empty: Settings = {
   facebook: "",
   instagram: "",
   youtube: "",
+  sejarah: "",
+  visi: "",
+  misi: "",
+  strukturOrganisasi: [
+    { jabatan: "Ketua Umum", nama: "" },
+    { jabatan: "Wakil Ketua", nama: "" },
+    { jabatan: "Sekretaris", nama: "" },
+    { jabatan: "Bendahara", nama: "" },
+    { jabatan: "Humas", nama: "" },
+    { jabatan: "Koordinator Wilayah", nama: "" },
+  ],
 };
 
 export default function AdminSettingsPage() {
@@ -37,6 +54,9 @@ export default function AdminSettingsPage() {
     fetch("/api/settings")
       .then((r) => r.json())
       .then((data) => {
+        let struktur = empty.strukturOrganisasi;
+        try { struktur = JSON.parse(data.strukturOrganisasi || "[]"); } catch {}
+        if (!struktur.length) struktur = empty.strukturOrganisasi;
         setForm({
           namaOrganisasi: data.namaOrganisasi || "",
           deskripsi: data.deskripsi || "",
@@ -47,6 +67,10 @@ export default function AdminSettingsPage() {
           facebook: data.facebook || "",
           instagram: data.instagram || "",
           youtube: data.youtube || "",
+          sejarah: data.sejarah || "",
+          visi: data.visi || "",
+          misi: data.misi || "",
+          strukturOrganisasi: struktur,
         });
       })
       .catch(() => setErrorMsg("Gagal memuat pengaturan"))
@@ -67,7 +91,10 @@ export default function AdminSettingsPage() {
       const res = await fetch("/api/settings", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          strukturOrganisasi: JSON.stringify(form.strukturOrganisasi),
+        }),
       });
       if (res.ok) {
         setSuccessMsg("Pengaturan berhasil disimpan");
@@ -170,6 +197,74 @@ export default function AdminSettingsPage() {
           <div>
             <label className={labelClass}>YouTube (URL)</label>
             <input type="url" value={form.youtube} onChange={set("youtube")} placeholder="https://youtube.com/@pasmada" className={inputClass} />
+          </div>
+        </div>
+
+        {/* Halaman Tentang */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-4">
+          <h3 className="font-semibold text-gray-900 border-b border-gray-100 pb-3">
+            Halaman Tentang
+          </h3>
+          <div>
+            <label className={labelClass}>Sejarah</label>
+            <textarea value={form.sejarah} onChange={set("sejarah")} rows={6} placeholder="Tulis sejarah organisasi..." className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Visi</label>
+            <textarea value={form.visi} onChange={set("visi")} rows={3} placeholder="Tulis visi organisasi..." className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>
+              Misi <span className="text-gray-400 font-normal">(satu poin per baris)</span>
+            </label>
+            <textarea value={form.misi} onChange={set("misi")} rows={5} placeholder={"Mempererat tali silaturahmi antar alumni\nMendukung pengembangan SMAN 1 Panyabungan\n..."} className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Struktur Organisasi</label>
+            <div className="space-y-2">
+              {form.strukturOrganisasi.map((item, i) => (
+                <div key={i} className="flex gap-2 items-center">
+                  <input
+                    type="text"
+                    value={item.jabatan}
+                    onChange={(e) => {
+                      const s = [...form.strukturOrganisasi];
+                      s[i] = { ...s[i], jabatan: e.target.value };
+                      setForm((p) => ({ ...p, strukturOrganisasi: s }));
+                    }}
+                    placeholder="Jabatan"
+                    className="w-1/2 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                  />
+                  <input
+                    type="text"
+                    value={item.nama}
+                    onChange={(e) => {
+                      const s = [...form.strukturOrganisasi];
+                      s[i] = { ...s[i], nama: e.target.value };
+                      setForm((p) => ({ ...p, strukturOrganisasi: s }));
+                    }}
+                    placeholder="Nama"
+                    className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setForm((p) => ({ ...p, strukturOrganisasi: p.strukturOrganisasi.filter((_, j) => j !== i) }))}
+                    className="p-2 text-red-400 hover:text-red-600 transition"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setForm((p) => ({ ...p, strukturOrganisasi: [...p.strukturOrganisasi, { jabatan: "", nama: "" }] }))}
+                className="mt-1 text-sm text-[#991B1B] hover:underline"
+              >
+                + Tambah anggota
+              </button>
+            </div>
           </div>
         </div>
 

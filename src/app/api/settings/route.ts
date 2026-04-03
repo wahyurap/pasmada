@@ -24,25 +24,25 @@ export async function PATCH(request: NextRequest) {
       namaOrganisasi, deskripsi, sambutanKetua,
       alamat, email, telepon,
       facebook, instagram, youtube,
+      sejarah, visi, misi, strukturOrganisasi,
     } = body;
+
+    const data = {
+      namaOrganisasi, deskripsi, sambutanKetua,
+      alamat, email, telepon,
+      facebook: facebook || null,
+      instagram: instagram || null,
+      youtube: youtube || null,
+      sejarah: sejarah || "",
+      visi: visi || "",
+      misi: misi || "",
+      strukturOrganisasi: strukturOrganisasi || "[]",
+    };
 
     const settings = await prisma.siteSettings.upsert({
       where: { id: "default" },
-      update: {
-        namaOrganisasi, deskripsi, sambutanKetua,
-        alamat, email, telepon,
-        facebook: facebook || null,
-        instagram: instagram || null,
-        youtube: youtube || null,
-      },
-      create: {
-        id: "default",
-        namaOrganisasi, deskripsi, sambutanKetua,
-        alamat, email, telepon,
-        facebook: facebook || null,
-        instagram: instagram || null,
-        youtube: youtube || null,
-      },
+      update: data,
+      create: { id: "default", ...data },
     });
 
     return NextResponse.json(settings);
