@@ -51,6 +51,33 @@ input, textarea, select {
     repeating-linear-gradient(-45deg, rgba(217,119,6,0.07) 0px, rgba(217,119,6,0.07) 1px, transparent 1px, transparent 18px);
 }
 
+/* ── Ulos Mandailing hero section ───────────────────────────── */
+
+/* Hero dengan motif ulos — merah maroon dengan diamond gorga */
+.ulos-hero {
+  background-color: #7F1D1D;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0px, transparent 9px,
+      rgba(0,0,0,0.12) 9px, rgba(0,0,0,0.12) 10px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0px, transparent 9px,
+      rgba(0,0,0,0.12) 9px, rgba(0,0,0,0.12) 10px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent       0px, transparent       20px,
+      rgba(217,119,6,0.15) 20px, rgba(217,119,6,0.15) 21px,
+      transparent       21px, transparent       30px,
+      rgba(255,255,255,0.06) 30px, rgba(255,255,255,0.06) 31px,
+      transparent       31px, transparent       40px
+    );
+  background-size: 20px 20px, 20px 20px, 100% 40px;
+}
+
 /* ── Ulos Mandailing footer ──────────────────────────────────── */
 
 /* Pita dekoratif horizontal mirip tepi ulos (dipakai di atas footer) */

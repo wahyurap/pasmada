@@ -26,7 +26,7 @@ export default async function TentangPage() {
   return (
     <>
       {/* Hero Banner */}
-      <section className="relative bg-[#991B1B] py-16 overflow-hidden">
+      <section className="ulos-hero relative py-16 overflow-hidden">
         <div className="absolute inset-0 batak-pattern" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white">Tentang PASMADA</h1>
@@ -34,7 +34,7 @@ export default async function TentangPage() {
             Mengenal lebih dekat organisasi alumni SMAN 1 Panyabungan
           </p>
         </div>
-        <div className="batak-divider mt-6" />
+        <div className="ulos-band mt-6" />
       </section>
 
       {/* Sejarah */}

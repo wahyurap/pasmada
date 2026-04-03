@@ -37,7 +37,7 @@ export default async function BeritaDetailPage({
   return (
     <>
       {/* Hero Banner */}
-      <section className="bg-[#991B1B] py-12">
+      <section className="ulos-hero py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/berita"

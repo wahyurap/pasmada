@@ -50,7 +50,7 @@ export default async function AlbumDetailPage({
   return (
     <>
       {/* Hero Banner */}
-      <section className="bg-[#991B1B] py-12">
+      <section className="ulos-hero py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/galeri"
