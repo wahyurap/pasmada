@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
+import HeroSlideshow from "@/components/HeroSlideshow";
 
 export const dynamic = "force-dynamic";
 
@@ -8,9 +9,10 @@ export default async function HomePage() {
   let settings = null, alumniCount = 0, angkatanCount = 0, beritaCount = 0, agendaCount = 0;
   let beritaTerbaru: Array<{ id: string; slug: string; judul: string; ringkasan: string | null; gambar: string | null; createdAt: Date }> = [];
   let agendaMendatang: Array<{ id: string; judul: string; tanggal: Date; lokasi: string; deskripsi: string }> = [];
+  let galeriPhotos: string[] = [];
 
   try {
-    [settings, alumniCount, angkatanCount, beritaCount, agendaCount, beritaTerbaru, agendaMendatang] =
+    const [settingsRes, alumniCountRes, angkatanRes, beritaCountRes, agendaCountRes, beritaRes, agendaRes, fotosRes] =
       await Promise.all([
         prisma.siteSettings.findFirst({ where: { id: "default" } }),
         prisma.alumni.count(),
@@ -29,7 +31,20 @@ export default async function HomePage() {
           orderBy: { tanggal: "asc" },
           take: 3,
         }),
+        prisma.foto.findMany({ take: 20, orderBy: { createdAt: "desc" } }),
       ]);
+
+    settings = settingsRes;
+    alumniCount = alumniCountRes;
+    angkatanCount = angkatanRes;
+    beritaCount = beritaCountRes;
+    agendaCount = agendaCountRes;
+    beritaTerbaru = beritaRes;
+    agendaMendatang = agendaRes;
+
+    // Shuffle dan ambil max 8 foto untuk slideshow
+    const shuffled = fotosRes.sort(() => Math.random() - 0.5);
+    galeriPhotos = shuffled.slice(0, 8).map((f: { url: string }) => f.url);
   } catch {
     // Database not available - show page with empty data
   }
@@ -45,11 +60,17 @@ export default async function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative bg-[#7F1D1D] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A]" />
-        <div className="absolute inset-0 batak-pattern" />
+        {galeriPhotos.length > 0 ? (
+          <HeroSlideshow photos={galeriPhotos} />
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A]" />
+            <div className="absolute inset-0 batak-pattern" />
+          </>
+        )}
         {/* Gold accent top line */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-[#D97706]" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36 text-center">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-[#D97706] z-10" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36 text-center">
           <div className="flex justify-center mb-6">
             <img src="/logo.png" alt="PASMADA" className="h-24 w-auto drop-shadow-lg" />
           </div>
