@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
         take: limit,
         include: {
           _count: { select: { fotos: true } },
+          fotos: { take: 1, orderBy: { createdAt: "asc" } },
         },
         orderBy: { createdAt: "desc" },
       }),

@@ -10,6 +10,7 @@ interface Album {
   coverImage: string | null;
   createdAt: string;
   _count: { fotos: number };
+  fotos: { url: string }[];
 }
 
 export default function AdminGaleriPage() {
@@ -150,9 +151,9 @@ export default function AdminGaleriPage() {
             >
               {/* Cover image */}
               <div className="relative h-40 bg-gray-100">
-                {album.coverImage ? (
+                {(album.coverImage || album.fotos[0]?.url) ? (
                   <img
-                    src={album.coverImage}
+                    src={album.coverImage || album.fotos[0].url}
                     alt={album.judul}
                     className="w-full h-full object-cover"
                   />
