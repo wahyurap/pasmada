@@ -35,6 +35,11 @@ export default function EditProfilPage() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
+  const [pwForm, setPwForm] = useState({ currentPassword: "", newPassword: "", confirmNewPassword: "" });
+  const [pwSubmitting, setPwSubmitting] = useState(false);
+  const [pwSuccess, setPwSuccess] = useState("");
+  const [pwError, setPwError] = useState("");
+
   // Pre-fill form on mount
   useEffect(() => {
     async function fetchProfil() {
@@ -100,6 +105,36 @@ export default function EditProfilPage() {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan");
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function handlePasswordChange(e: React.FormEvent) {
+    e.preventDefault();
+    setPwError("");
+    setPwSuccess("");
+    if (pwForm.newPassword !== pwForm.confirmNewPassword) {
+      setPwError("Konfirmasi password tidak cocok");
+      return;
+    }
+    if (pwForm.newPassword.length < 6) {
+      setPwError("Password baru minimal 6 karakter");
+      return;
+    }
+    setPwSubmitting(true);
+    try {
+      const res = await fetch("/api/user/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentPassword: pwForm.currentPassword, newPassword: pwForm.newPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Gagal mengganti password");
+      setPwSuccess("Password berhasil diubah!");
+      setPwForm({ currentPassword: "", newPassword: "", confirmNewPassword: "" });
+    } catch (err) {
+      setPwError(err instanceof Error ? err.message : "Terjadi kesalahan");
+    } finally {
+      setPwSubmitting(false);
     }
   }
 
@@ -292,6 +327,78 @@ export default function EditProfilPage() {
               >
                 Batal
               </Link>
+            </div>
+          </form>
+        </div>
+        {/* Password change section */}
+        <div className="mt-8 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="h-2 bg-[#D97706]" />
+          <form onSubmit={handlePasswordChange} className="px-6 py-8 space-y-5">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900">Ganti Password</h2>
+              <p className="text-sm text-gray-500 mt-0.5">Perbarui password akun Anda</p>
+            </div>
+
+            {pwSuccess && (
+              <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 text-sm">
+                <svg className="w-5 h-5 shrink-0 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{pwSuccess}</span>
+              </div>
+            )}
+            {pwError && (
+              <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
+                <svg className="w-5 h-5 shrink-0 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{pwError}</span>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Password Saat Ini</label>
+              <input
+                type="password"
+                required
+                value={pwForm.currentPassword}
+                onChange={(e) => setPwForm((p) => ({ ...p, currentPassword: e.target.value }))}
+                placeholder="Masukkan password saat ini"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#D97706] focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Password Baru</label>
+              <input
+                type="password"
+                required
+                value={pwForm.newPassword}
+                onChange={(e) => setPwForm((p) => ({ ...p, newPassword: e.target.value }))}
+                placeholder="Minimal 6 karakter"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#D97706] focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Konfirmasi Password Baru</label>
+              <input
+                type="password"
+                required
+                value={pwForm.confirmNewPassword}
+                onChange={(e) => setPwForm((p) => ({ ...p, confirmNewPassword: e.target.value }))}
+                placeholder="Ulangi password baru"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#D97706] focus:border-transparent"
+              />
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={pwSubmitting}
+                className="flex items-center gap-2 px-6 py-2.5 bg-[#D97706] text-white text-sm font-medium rounded-lg hover:bg-[#B45309] disabled:opacity-60 disabled:cursor-not-allowed transition"
+              >
+                {pwSubmitting && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
+                {pwSubmitting ? "Menyimpan..." : "Ganti Password"}
+              </button>
             </div>
           </form>
         </div>

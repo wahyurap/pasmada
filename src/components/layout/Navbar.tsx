@@ -102,6 +102,13 @@ export default function Navbar() {
                     >
                       Profil
                     </Link>
+                    <Link
+                      href="/pengajuan"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    >
+                      Pengajuan Konten
+                    </Link>
                     {session.user.role === "ADMIN" && (
                       <Link
                         href="/admin"
@@ -221,6 +228,13 @@ export default function Navbar() {
                   className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
                 >
                   Profil
+                </Link>
+                <Link
+                  href="/pengajuan"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
+                >
+                  Pengajuan Konten
                 </Link>
                 {session.user.role === "ADMIN" && (
                   <Link
