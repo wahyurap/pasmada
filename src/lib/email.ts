@@ -1,14 +1,8 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const FROM = process.env.RESEND_FROM || "PASMADA <noreply@pasmada.org>";
 
 export async function sendVerificationEmail(
   email: string,
@@ -16,8 +10,8 @@ export async function sendVerificationEmail(
 ): Promise<void> {
   const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email?token=${token}`;
 
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
+  await resend.emails.send({
+    from: FROM,
     to: email,
     subject: "Verifikasi Email - PASMADA",
     html: `
@@ -44,8 +38,8 @@ export async function sendPasswordResetEmail(
 ): Promise<void> {
   const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${token}`;
 
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
+  await resend.emails.send({
+    from: FROM,
     to: email,
     subject: "Reset Password - PASMADA",
     html: `
