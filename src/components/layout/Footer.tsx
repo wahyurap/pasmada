@@ -12,8 +12,8 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#450A0A] text-white">
-      <div className="batak-divider" />
+    <footer className="ulos-footer text-white">
+      <div className="ulos-band" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Logo & Description */}
@@ -92,11 +92,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-400">
+        <div className="border-t border-[#991B1B]/30 mt-10 pt-6 text-center text-sm text-gray-400">
           &copy; {currentYear} PASMADA - Parsadaan Alumni SMAN Sada. Hak cipta
           dilindungi.
         </div>
       </div>
+      <div className="ulos-band" style={{ transform: "scaleY(-1)" }} />
     </footer>
   );
 }

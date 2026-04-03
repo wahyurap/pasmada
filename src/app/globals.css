@@ -50,3 +50,69 @@ input, textarea, select {
     repeating-linear-gradient(45deg, rgba(217,119,6,0.07) 0px, rgba(217,119,6,0.07) 1px, transparent 1px, transparent 18px),
     repeating-linear-gradient(-45deg, rgba(217,119,6,0.07) 0px, rgba(217,119,6,0.07) 1px, transparent 1px, transparent 18px);
 }
+
+/* ── Ulos Mandailing footer ──────────────────────────────────── */
+
+/* Pita dekoratif horizontal mirip tepi ulos (dipakai di atas footer) */
+.ulos-band {
+  height: 36px;
+  background:
+    /* Diamond lattice overlay */
+    repeating-linear-gradient(
+      45deg,
+      transparent 0px, transparent 4px,
+      rgba(0,0,0,0.35) 4px, rgba(0,0,0,0.35) 5px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0px, transparent 4px,
+      rgba(0,0,0,0.35) 4px, rgba(0,0,0,0.35) 5px
+    ),
+    /* Horizontal color bands like ulos stripes */
+    linear-gradient(
+      0deg,
+      #0D0202 0px,  #0D0202 2px,
+      #D97706 2px,  #D97706 5px,
+      #F59E0B 5px,  #F59E0B 7px,
+      #D97706 7px,  #D97706 9px,
+      #991B1B 9px,  #991B1B 13px,
+      #7F1D1D 13px, #7F1D1D 15px,
+      #ffffff 15px, #ffffff 16px,
+      #CC0000 16px, #CC0000 19px,
+      #ffffff 19px, #ffffff 20px,
+      #7F1D1D 20px, #7F1D1D 22px,
+      #991B1B 22px, #991B1B 26px,
+      #D97706 26px, #D97706 28px,
+      #F59E0B 28px, #F59E0B 30px,
+      #D97706 30px, #D97706 33px,
+      #0D0202 33px, #0D0202 36px
+    );
+  background-size: 10px 10px, 10px 10px, 100% 36px;
+}
+
+/* Background footer dengan motif ulos — gelap dengan diamond texture */
+.ulos-footer {
+  background-color: #0D0202;
+  background-image:
+    /* Diamond gorga lattice — warna merah & emas sangat tipis */
+    repeating-linear-gradient(
+      45deg,
+      transparent 0px, transparent 9px,
+      rgba(153,27,27,0.18) 9px, rgba(153,27,27,0.18) 10px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0px, transparent 9px,
+      rgba(153,27,27,0.18) 9px, rgba(153,27,27,0.18) 10px
+    ),
+    /* Pita horizontal halus seperti jalur ulos */
+    repeating-linear-gradient(
+      0deg,
+      transparent       0px, transparent       24px,
+      rgba(217,119,6,0.08) 24px, rgba(217,119,6,0.08) 25px,
+      transparent       25px, transparent       36px,
+      rgba(153,27,27,0.15) 36px, rgba(153,27,27,0.15) 37px,
+      transparent       37px, transparent       48px
+    );
+  background-size: 20px 20px, 20px 20px, 100% 48px;
+}
