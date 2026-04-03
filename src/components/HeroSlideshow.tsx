@@ -36,10 +36,8 @@ export default function HeroSlideshow({ photos }: { photos: string[] }) {
           </div>
         ))}
       </div>
-      {/* Dark red overlay agar teks tetap terbaca */}
-      <div className="absolute inset-0 bg-[#7F1D1D]/80" />
-      {/* Batak pattern overlay */}
-      <div className="absolute inset-0 batak-pattern" />
+      {/* Subtle dark overlay agar teks tetap terbaca */}
+      <div className="absolute inset-0 bg-black/40" />
 
       {/* Dot indicators */}
       {photos.length > 1 && (
