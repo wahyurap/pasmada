@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 interface Album {
   id: string;
@@ -152,11 +151,10 @@ export default function AdminGaleriPage() {
               {/* Cover image */}
               <div className="relative h-40 bg-gray-100">
                 {album.coverImage ? (
-                  <Image
+                  <img
                     src={album.coverImage}
                     alt={album.judul}
-                    fill
-                    className="object-cover"
+                    className="w-full h-full object-cover"
                   />
                 ) : (
                   <div className="flex items-center justify-center h-full">

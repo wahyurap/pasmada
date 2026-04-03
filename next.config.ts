@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
   // Allow serving uploaded images from /public/uploads
   images: {
     remotePatterns: [],
+    unoptimized: true,
   },
   // Output for Docker
   output: process.env.BUILD_STANDALONE === "true" ? "standalone" : undefined,

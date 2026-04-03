@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 interface Foto {
   id: string;
@@ -260,11 +259,10 @@ export default function AdminAlbumDetailPage({
               className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group"
             >
               <div className="relative h-40 bg-gray-100">
-                <Image
+                <img
                   src={foto.url}
                   alt={foto.caption || "Foto"}
-                  fill
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="p-3">
