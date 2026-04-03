@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Serve uploaded files via API route (reliable across all deployment configs)
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/uploads/:path*",
+          destination: "/api/uploads/:path*",
+        },
+      ],
+    };
+  },
   // Security headers
   async headers() {
     return [
