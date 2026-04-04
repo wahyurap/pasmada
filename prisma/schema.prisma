@@ -24,6 +24,7 @@ model User {
   resetExpires    DateTime?
   role            Role         @default(ALUMNI)
   alumni          Alumni?
+  alumniImport    AlumniImport?
   submissions     Submission[]
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
@@ -142,4 +143,31 @@ model Submission {
 
   @@index([status])
   @@index([userId])
+}
+
+// Alumni imported from existing database (not yet registered)
+model AlumniImport {
+  id           String   @id @default(cuid())
+  namaLengkap  String
+  tahunLulus   Int
+  noHp         String?
+  pekerjaan    String?
+  linkedUserId String?  @unique
+  linkedUser   User?    @relation(fields: [linkedUserId], references: [id])
+  createdAt    DateTime @default(now())
+
+  @@index([tahunLulus])
+  @@index([namaLengkap])
+}
+
+model AdminNotification {
+  id        String   @id @default(cuid())
+  type      String
+  message   String   @db.Text
+  data      String?  @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([isRead])
+  @@index([createdAt])
 }

@@ -34,10 +34,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
+    const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return NextResponse.json(
         { error: "Email sudah terdaftar" },
@@ -45,11 +42,12 @@ export async function POST(request: Request) {
       );
     }
 
+    const tahunLulusInt = parseInt(tahunLulus);
     const hashedPassword = await bcrypt.hash(password, 12);
     const verifyToken = crypto.randomUUID();
-    const verifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    const verifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
-    await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
         nama,
         email,
@@ -59,7 +57,7 @@ export async function POST(request: Request) {
         alumni: {
           create: {
             namaLengkap,
-            tahunLulus: parseInt(tahunLulus),
+            tahunLulus: tahunLulusInt,
             pekerjaan,
             alamat,
             noHp: noHp || null,
@@ -68,10 +66,73 @@ export async function POST(request: Request) {
       },
     });
 
+    // --- Duplicate detection ---
+    const duplicates: string[] = [];
+
+    // 1. Check against imported alumni directory (by name+year or phone)
+    const importedMatch = await prisma.alumniImport.findFirst({
+      where: {
+        OR: [
+          {
+            AND: [
+              { namaLengkap: { equals: namaLengkap, mode: "insensitive" } },
+              { tahunLulus: tahunLulusInt },
+            ],
+          },
+          ...(noHp ? [{ noHp: { contains: noHp.replace(/\D/g, "").slice(-8) } }] : []),
+        ],
+      },
+    });
+
+    if (importedMatch) {
+      duplicates.push(
+        `Cocok dengan data alumni existing: **${importedMatch.namaLengkap}** (angkatan ${importedMatch.tahunLulus})`
+      );
+      // Link the imported record to the new user
+      await prisma.alumniImport.update({
+        where: { id: importedMatch.id },
+        data: { linkedUserId: newUser.id },
+      });
+    }
+
+    // 2. Check against already-registered alumni (same name+year, different user)
+    const registeredMatch = await prisma.alumni.findFirst({
+      where: {
+        AND: [
+          { namaLengkap: { equals: namaLengkap, mode: "insensitive" } },
+          { tahunLulus: tahunLulusInt },
+          { userId: { not: newUser.id } },
+        ],
+      },
+      include: { user: { select: { email: true } } },
+    });
+
+    if (registeredMatch) {
+      duplicates.push(
+        `Nama & angkatan sama dengan akun terdaftar: **${registeredMatch.namaLengkap}** (${registeredMatch.user.email})`
+      );
+    }
+
+    // 3. Create admin notification if duplicates found
+    if (duplicates.length > 0) {
+      await prisma.adminNotification.create({
+        data: {
+          type: "POTENTIAL_DUPLICATE",
+          message: `Pendaftaran baru berpotensi duplikat: **${namaLengkap}** (${email}, angkatan ${tahunLulusInt})`,
+          data: JSON.stringify({
+            userId: newUser.id,
+            namaLengkap,
+            email,
+            tahunLulus: tahunLulusInt,
+            matches: duplicates,
+          }),
+        },
+      });
+    }
+
     try {
       await sendVerificationEmail(email, verifyToken);
     } catch {
-      // Email sending failed but user is created
       console.error("Failed to send verification email");
     }
 
