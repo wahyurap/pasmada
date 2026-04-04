@@ -25,7 +25,8 @@ export default function RegisterPage() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -189,7 +190,7 @@ export default function RegisterPage() {
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
           <input
-            id="password" name="password" type="password" required
+            id="password" name="password" type="password" required autoComplete="new-password"
             value={form.password} onChange={handleChange}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Minimal 8 karakter"
@@ -199,7 +200,7 @@ export default function RegisterPage() {
         <div>
           <label htmlFor="konfirmasiPassword" className="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
           <input
-            id="konfirmasiPassword" name="konfirmasiPassword" type="password" required
+            id="konfirmasiPassword" name="konfirmasiPassword" type="password" required autoComplete="new-password"
             value={form.konfirmasiPassword} onChange={handleChange}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Ulangi password"
