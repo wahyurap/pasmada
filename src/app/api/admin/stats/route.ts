@@ -14,7 +14,7 @@ export async function GET() {
 
     const [totalAlumni, totalBerita, totalAgenda, totalAlbums] =
       await Promise.all([
-        prisma.alumni.count(),
+        prisma.alumniImport.count(),
         prisma.berita.count(),
         prisma.agenda.count(),
         prisma.album.count(),

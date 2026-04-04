@@ -15,8 +15,8 @@ export default async function HomePage() {
     const [settingsRes, alumniCountRes, angkatanRes, beritaCountRes, agendaCountRes, beritaRes, agendaRes, fotosRes] =
       await Promise.all([
         prisma.siteSettings.findFirst({ where: { id: "default" } }),
-        prisma.alumni.count(),
-        prisma.alumni
+        prisma.alumniImport.count(),
+        prisma.alumniImport
           .groupBy({ by: ["tahunLulus"] })
           .then((g: unknown[]) => g.length),
         prisma.berita.count({ where: { published: true } }),
