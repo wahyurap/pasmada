@@ -3,8 +3,8 @@ import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import * as XLSX from "xlsx";
 
-function isAdmin(session: Awaited<ReturnType<typeof auth>>) {
-  return (session?.user as { role?: string })?.role === "ADMIN";
+function isAdmin(session: { user?: { role?: string } } | null) {
+  return session?.user?.role === "ADMIN";
 }
 
 export async function POST(request: NextRequest) {
