@@ -14,6 +14,9 @@ export default function RegisterPage() {
     konfirmasiPassword: "",
     namaLengkap: "",
     tahunLulus: "",
+    pekerjaan: "",
+    alamat: "",
+    noHp: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -51,6 +54,9 @@ export default function RegisterPage() {
           password: form.password,
           namaLengkap: form.namaLengkap,
           tahunLulus: form.tahunLulus ? parseInt(form.tahunLulus) : null,
+          pekerjaan: form.pekerjaan,
+          alamat: form.alamat,
+          noHp: form.noHp || null,
         }),
       });
 
@@ -146,6 +152,38 @@ export default function RegisterPage() {
               <option key={year} value={year}>{year}</option>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label htmlFor="pekerjaan" className="block text-sm font-medium text-gray-700 mb-1">Pekerjaan</label>
+          <input
+            id="pekerjaan" name="pekerjaan" type="text" required
+            value={form.pekerjaan} onChange={handleChange}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            placeholder="Contoh: Dokter, Guru, Wiraswasta"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="alamat" className="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
+          <input
+            id="alamat" name="alamat" type="text" required
+            value={form.alamat} onChange={handleChange}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            placeholder="Kota / Kabupaten tempat tinggal"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="noHp" className="block text-sm font-medium text-gray-700 mb-1">
+            No. HP <span className="text-gray-400 font-normal">(opsional)</span>
+          </label>
+          <input
+            id="noHp" name="noHp" type="tel"
+            value={form.noHp} onChange={handleChange}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
+            placeholder="08xxxxxxxxxx"
+          />
         </div>
 
         <div>

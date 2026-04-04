@@ -18,9 +18,9 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { nama, email, password, namaLengkap, tahunLulus } = body;
+    const { nama, email, password, namaLengkap, tahunLulus, pekerjaan, alamat, noHp } = body;
 
-    if (!nama || !email || !password || !namaLengkap || !tahunLulus) {
+    if (!nama || !email || !password || !namaLengkap || !tahunLulus || !pekerjaan || !alamat) {
       return NextResponse.json(
         { error: "Semua field wajib diisi" },
         { status: 400 }
@@ -60,6 +60,9 @@ export async function POST(request: Request) {
           create: {
             namaLengkap,
             tahunLulus: parseInt(tahunLulus),
+            pekerjaan,
+            alamat,
+            noHp: noHp || null,
           },
         },
       },
