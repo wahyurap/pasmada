@@ -34,6 +34,10 @@ export default function AdminAlumniPage() {
   const [tahunFilter, setTahunFilter] = useState("");
   const [page, setPage] = useState(1);
 
+  const [importFile, setImportFile] = useState<File | null>(null);
+  const [importing, setImporting] = useState(false);
+  const [importResult, setImportResult] = useState<{ inserted: number; skipped: number; total: number } | null>(null);
+
   const [editTarget, setEditTarget] = useState<Alumni | null>(null);
   const [editForm, setEditForm] = useState<EditForm>({
     namaLengkap: "",
@@ -145,6 +149,32 @@ export default function AdminAlumniPage() {
     }
   }
 
+  async function handleImport(e: React.FormEvent) {
+    e.preventDefault();
+    if (!importFile) return;
+    setImporting(true);
+    setImportResult(null);
+    setSuccessMsg("");
+    setErrorMsg("");
+    try {
+      const fd = new FormData();
+      fd.append("file", importFile);
+      const res = await fetch("/api/admin/alumni/import", { method: "POST", body: fd });
+      const data = await res.json();
+      if (res.ok) {
+        setImportResult(data);
+        setImportFile(null);
+        fetchAlumni();
+      } else {
+        setErrorMsg(data.error || "Gagal mengimpor data");
+      }
+    } catch {
+      setErrorMsg("Terjadi kesalahan saat mengimpor");
+    } finally {
+      setImporting(false);
+    }
+  }
+
   const currentYear = new Date().getFullYear();
   const tahunOptions = Array.from({ length: 30 }, (_, i) => currentYear - i);
 
@@ -157,6 +187,35 @@ export default function AdminAlumniPage() {
             {meta ? `Total: ${meta.total} alumni` : ""}
           </p>
         </div>
+      </div>
+
+      {/* Import Excel */}
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+        <h3 className="text-sm font-semibold text-blue-900 mb-3">Import Alumni dari Excel</h3>
+        <p className="text-xs text-blue-700 mb-3">
+          Kolom yang dikenali: <strong>Nama Lengkap</strong>, <strong>Tahun Lulus</strong>, <strong>No HP</strong>, <strong>Pekerjaan</strong>
+        </p>
+        <form onSubmit={handleImport} className="flex items-center gap-3">
+          <input
+            type="file"
+            accept=".xlsx,.xls"
+            onChange={(e) => setImportFile(e.target.files?.[0] ?? null)}
+            className="text-sm text-gray-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-white file:text-blue-700 hover:file:bg-blue-50"
+          />
+          <button
+            type="submit"
+            disabled={!importFile || importing}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
+          >
+            {importing ? "Mengimpor..." : "Import"}
+          </button>
+        </form>
+        {importResult && (
+          <p className="mt-3 text-sm text-green-700 font-medium">
+            Berhasil import {importResult.inserted} dari {importResult.total} data
+            {importResult.skipped > 0 && ` (${importResult.skipped} dilewati karena data tidak valid)`}
+          </p>
+        )}
       </div>
 
       {successMsg && (
