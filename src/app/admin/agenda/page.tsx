@@ -2,6 +2,66 @@
 
 import { useEffect, useState, useCallback } from "react";
 
+interface AgendaFormFieldsProps {
+  form: AgendaForm;
+  setForm: React.Dispatch<React.SetStateAction<AgendaForm>>;
+}
+
+function AgendaFormFields({ form, setForm }: AgendaFormFieldsProps) {
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Judul <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          value={form.judul}
+          onChange={(e) => setForm((p) => ({ ...p, judul: e.target.value }))}
+          required
+          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Deskripsi <span className="text-red-500">*</span>
+        </label>
+        <textarea
+          value={form.deskripsi}
+          onChange={(e) => setForm((p) => ({ ...p, deskripsi: e.target.value }))}
+          required
+          rows={3}
+          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-none"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Tanggal & Waktu <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="datetime-local"
+          value={form.tanggal}
+          onChange={(e) => setForm((p) => ({ ...p, tanggal: e.target.value }))}
+          required
+          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Lokasi <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          value={form.lokasi}
+          onChange={(e) => setForm((p) => ({ ...p, lokasi: e.target.value }))}
+          required
+          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+        />
+      </div>
+    </div>
+  );
+}
+
 interface Agenda {
   id: string;
   judul: string;
@@ -174,67 +234,6 @@ export default function AdminAgendaPage() {
     } finally {
       setDeleteLoading(false);
     }
-  }
-
-  function AgendaFormFields({
-    form,
-    setForm,
-  }: {
-    form: AgendaForm;
-    setForm: (f: AgendaForm) => void;
-  }) {
-    return (
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Judul <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            value={form.judul}
-            onChange={(e) => setForm({ ...form, judul: e.target.value })}
-            required
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Deskripsi <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            value={form.deskripsi}
-            onChange={(e) => setForm({ ...form, deskripsi: e.target.value })}
-            required
-            rows={3}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-none"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Tanggal & Waktu <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="datetime-local"
-            value={form.tanggal}
-            onChange={(e) => setForm({ ...form, tanggal: e.target.value })}
-            required
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Lokasi <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            value={form.lokasi}
-            onChange={(e) => setForm({ ...form, lokasi: e.target.value })}
-            required
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
-          />
-        </div>
-      </div>
-    );
   }
 
   return (
