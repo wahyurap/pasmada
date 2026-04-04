@@ -9,6 +9,7 @@ interface AlumniData {
   pekerjaan?: string | null;
   alamat?: string | null;
   noHp?: string | null;
+  foto?: string | null;
 }
 
 interface ProfilData {
@@ -125,10 +126,18 @@ export default function ProfilPage() {
 
           {/* Avatar + identity */}
           <div className="px-6 pt-8 pb-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 border-b border-gray-100">
-            <div
-              className={`w-20 h-20 rounded-full flex items-center justify-center shrink-0 ${colorClass}`}
-            >
-              <span className="text-white font-bold text-3xl">{initial}</span>
+            <div className="shrink-0">
+              {profil.alumni?.foto ? (
+                <img
+                  src={profil.alumni.foto}
+                  alt={displayName}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-gray-100"
+                />
+              ) : (
+                <div className={`w-20 h-20 rounded-full flex items-center justify-center ${colorClass}`}>
+                  <span className="text-white font-bold text-3xl">{initial}</span>
+                </div>
+              )}
             </div>
             <div className="text-center sm:text-left">
               <h2 className="text-xl font-bold text-gray-900">{displayName}</h2>

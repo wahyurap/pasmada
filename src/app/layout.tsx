@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   title: "PASMADA - Parsadaan Alumni SMAN Sada",
   description:
     "Wadah silaturahmi dan komunikasi antar alumni SMAN Sada untuk mempererat tali persaudaraan dan berkontribusi bagi almamater.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

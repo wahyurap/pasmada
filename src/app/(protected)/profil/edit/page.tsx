@@ -35,6 +35,13 @@ export default function EditProfilPage() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
+  const [currentFoto, setCurrentFoto] = useState<string | null>(null);
+  const [fotoFile, setFotoFile] = useState<File | null>(null);
+  const [fotoPreview, setFotoPreview] = useState<string | null>(null);
+  const [fotoUploading, setFotoUploading] = useState(false);
+  const [fotoSuccess, setFotoSuccess] = useState("");
+  const [fotoError, setFotoError] = useState("");
+
   const [pwForm, setPwForm] = useState({ currentPassword: "", newPassword: "", confirmNewPassword: "" });
   const [pwSubmitting, setPwSubmitting] = useState(false);
   const [pwSuccess, setPwSuccess] = useState("");
@@ -56,6 +63,7 @@ export default function EditProfilPage() {
           alamat: data.alumni?.alamat || "",
           noHp: data.alumni?.noHp || "",
         });
+        setCurrentFoto(data.alumni?.foto || null);
       } catch {
         setError("Gagal memuat data profil. Silakan muat ulang halaman.");
       } finally {
@@ -71,6 +79,44 @@ export default function EditProfilPage() {
     >
   ) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  function handleFotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setFotoFile(file);
+    setFotoPreview(URL.createObjectURL(file));
+  }
+
+  async function handleFotoUpload() {
+    if (!fotoFile) return;
+    setFotoUploading(true);
+    setFotoError("");
+    setFotoSuccess("");
+    try {
+      const fd = new FormData();
+      fd.append("file", fotoFile);
+      fd.append("subdir", "profil");
+      const upRes = await fetch("/api/upload", { method: "POST", body: fd });
+      if (!upRes.ok) throw new Error("Gagal mengupload foto");
+      const { url } = await upRes.json();
+
+      const saveRes = await fetch("/api/profil", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ foto: url }),
+      });
+      if (!saveRes.ok) throw new Error("Gagal menyimpan foto");
+
+      setCurrentFoto(url);
+      setFotoFile(null);
+      setFotoPreview(null);
+      setFotoSuccess("Foto profil berhasil diperbarui!");
+    } catch (err) {
+      setFotoError(err instanceof Error ? err.message : "Terjadi kesalahan");
+    } finally {
+      setFotoUploading(false);
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -206,6 +252,43 @@ export default function EditProfilPage() {
                 <span>{error}</span>
               </div>
             )}
+
+            {/* Foto Profil */}
+            <div className="flex flex-col items-center gap-4 pb-5 border-b border-gray-100">
+              <div className="relative">
+                {fotoPreview || currentFoto ? (
+                  <img
+                    src={fotoPreview || currentFoto!}
+                    alt="Foto profil"
+                    className="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
+                  />
+                ) : (
+                  <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center border-2 border-dashed border-gray-300">
+                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col items-center gap-2 w-full max-w-xs">
+                <label className="cursor-pointer px-4 py-2 text-sm font-medium text-[#991B1B] border border-[#991B1B] rounded-lg hover:bg-red-50 transition">
+                  Pilih Foto
+                  <input type="file" accept="image/*" className="hidden" onChange={handleFotoChange} />
+                </label>
+                {fotoFile && (
+                  <button
+                    type="button"
+                    onClick={handleFotoUpload}
+                    disabled={fotoUploading}
+                    className="w-full px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-[#7F1D1D] disabled:opacity-50 transition"
+                  >
+                    {fotoUploading ? "Mengupload..." : "Simpan Foto"}
+                  </button>
+                )}
+                {fotoSuccess && <p className="text-xs text-green-600">{fotoSuccess}</p>}
+                {fotoError && <p className="text-xs text-red-600">{fotoError}</p>}
+              </div>
+            </div>
 
             {/* Nama Lengkap */}
             <div>
