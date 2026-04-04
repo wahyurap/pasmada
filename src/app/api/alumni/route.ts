@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     }
 
     const [alumni, total] = await Promise.all([
-      prisma.alumni.findMany({
+      prisma.alumniImport.findMany({
         where,
         select: {
           id: true,
@@ -56,13 +56,12 @@ export async function GET(request: NextRequest) {
           tahunLulus: true,
           pekerjaan: true,
           alamat: true,
-          foto: true,
         },
         skip,
         take: limit,
         orderBy: { namaLengkap: "asc" },
       }),
-      prisma.alumni.count({ where }),
+      prisma.alumniImport.count({ where }),
     ]);
 
     return NextResponse.json({
