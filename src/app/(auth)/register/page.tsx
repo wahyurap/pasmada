@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 
 const currentYear = new Date().getFullYear();
@@ -22,6 +22,9 @@ export default function RegisterPage() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const konfirmasiRef = useRef<HTMLInputElement>(null);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -33,12 +36,16 @@ export default function RegisterPage() {
     e.preventDefault();
     setError("");
 
-    if (form.password !== form.konfirmasiPassword) {
+    // Read directly from DOM to handle browser autofill
+    const password = passwordRef.current?.value ?? form.password;
+    const konfirmasiPassword = konfirmasiRef.current?.value ?? form.konfirmasiPassword;
+
+    if (password !== konfirmasiPassword) {
       setError("Password dan konfirmasi password tidak cocok.");
       return;
     }
 
-    if (form.password.length < 8) {
+    if (password.length < 8) {
       setError("Password minimal 8 karakter.");
       return;
     }
@@ -52,7 +59,7 @@ export default function RegisterPage() {
         body: JSON.stringify({
           nama: form.nama,
           email: form.email,
-          password: form.password,
+          password,
           namaLengkap: form.namaLengkap,
           tahunLulus: form.tahunLulus ? parseInt(form.tahunLulus) : null,
           pekerjaan: form.pekerjaan,
@@ -191,6 +198,7 @@ export default function RegisterPage() {
           <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
           <input
             id="password" name="password" type="password" required autoComplete="new-password"
+            ref={passwordRef}
             value={form.password} onChange={handleChange}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Minimal 8 karakter"
@@ -201,6 +209,7 @@ export default function RegisterPage() {
           <label htmlFor="konfirmasiPassword" className="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
           <input
             id="konfirmasiPassword" name="konfirmasiPassword" type="password" required autoComplete="new-password"
+            ref={konfirmasiRef}
             value={form.konfirmasiPassword} onChange={handleChange}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#991B1B] focus:border-transparent outline-none transition"
             placeholder="Ulangi password"
