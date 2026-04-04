@@ -152,6 +152,7 @@ model AlumniImport {
   tahunLulus   Int
   noHp         String?
   pekerjaan    String?
+  alamat       String?
   linkedUserId String?  @unique
   linkedUser   User?    @relation(fields: [linkedUserId], references: [id])
   createdAt    DateTime @default(now())

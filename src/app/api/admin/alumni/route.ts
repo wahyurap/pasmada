@@ -29,7 +29,6 @@ export async function GET(request: NextRequest) {
       where.OR = [
         { namaLengkap: { contains: q, mode: "insensitive" } },
         { pekerjaan: { contains: q, mode: "insensitive" } },
-        { alamat: { contains: q, mode: "insensitive" } },
       ];
     }
 
@@ -38,33 +37,31 @@ export async function GET(request: NextRequest) {
     }
 
     const [alumni, total] = await Promise.all([
-      prisma.alumni.findMany({
+      prisma.alumniImport.findMany({
         where,
         include: {
-          user: {
-            select: {
-              id: true,
-              email: true,
-              nama: true,
-              emailVerified: true,
-            },
-          },
+          linkedUser: { select: { id: true, email: true, nama: true } },
         },
         skip,
         take: limit,
         orderBy: { namaLengkap: "asc" },
       }),
-      prisma.alumni.count({ where }),
+      prisma.alumniImport.count({ where }),
     ]);
 
+    const data = alumni.map((a) => ({
+      id: a.id,
+      namaLengkap: a.namaLengkap,
+      tahunLulus: a.tahunLulus,
+      pekerjaan: a.pekerjaan,
+      alamat: a.alamat,
+      noHp: a.noHp,
+      linkedUser: a.linkedUser,
+    }));
+
     return NextResponse.json({
-      data: alumni,
-      meta: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
+      data,
+      meta: { page, limit, total, totalPages: Math.ceil(total / limit) },
     });
   } catch (error) {
     console.error("Admin alumni GET error:", error);

@@ -17,9 +17,9 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
-    const { namaLengkap, tahunLulus, pekerjaan, alamat, noHp, foto } = body;
+    const { namaLengkap, tahunLulus, pekerjaan, alamat, noHp } = body;
 
-    const existing = await prisma.alumni.findUnique({ where: { id } });
+    const existing = await prisma.alumniImport.findUnique({ where: { id } });
     if (!existing) {
       return NextResponse.json(
         { error: "Alumni tidak ditemukan" },
@@ -27,7 +27,7 @@ export async function PUT(
       );
     }
 
-    const alumni = await prisma.alumni.update({
+    const alumni = await prisma.alumniImport.update({
       where: { id },
       data: {
         ...(namaLengkap !== undefined && { namaLengkap }),
@@ -35,7 +35,6 @@ export async function PUT(
         ...(pekerjaan !== undefined && { pekerjaan }),
         ...(alamat !== undefined && { alamat }),
         ...(noHp !== undefined && { noHp }),
-        ...(foto !== undefined && { foto }),
       },
     });
 
@@ -64,7 +63,7 @@ export async function DELETE(
 
     const { id } = await params;
 
-    const existing = await prisma.alumni.findUnique({ where: { id } });
+    const existing = await prisma.alumniImport.findUnique({ where: { id } });
     if (!existing) {
       return NextResponse.json(
         { error: "Alumni tidak ditemukan" },
@@ -72,8 +71,7 @@ export async function DELETE(
       );
     }
 
-    // Delete the user which will cascade delete the alumni record
-    await prisma.user.delete({ where: { id: existing.userId } });
+    await prisma.alumniImport.delete({ where: { id } });
 
     return NextResponse.json({ message: "Alumni berhasil dihapus" });
   } catch (error) {

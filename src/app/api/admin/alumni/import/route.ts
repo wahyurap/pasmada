@@ -46,22 +46,23 @@ export async function POST(request: NextRequest) {
     return "";
   }
 
-  const data: { namaLengkap: string; tahunLulus: number; noHp: string | null; pekerjaan: string | null }[] = [];
+  const data: { namaLengkap: string; tahunLulus: number; noHp: string | null; pekerjaan: string | null; alamat: string | null }[] = [];
   const skipped: number[] = [];
 
   rows.forEach((row, i) => {
     const namaLengkap = getField(row, "namalengkap", "nama lengkap", "nama_lengkap", "nama");
-    const tahunStr = getField(row, "tahunlulus", "tahun lulus", "tahun_lulus", "tahun", "angkatan");
+    const tahunStr = getField(row, "tahunlulus", "tahun lulus", "tahun_lulus", "tahun", "angkatan", "angkatan (tahun lulus)");
     const tahunLulus = parseInt(tahunStr);
-    const noHp = getField(row, "nohp", "no hp", "no_hp", "nomor hp", "telepon", "hp") || null;
+    const noHp = getField(row, "nohp", "no hp", "no_hp", "nomor hp", "telepon", "hp", "no. hp") || null;
     const pekerjaan = getField(row, "pekerjaan", "profesi", "jabatan", "pekerjaan saat ini") || null;
+    const alamat = getField(row, "alamat", "address", "domisili") || null;
 
     if (!namaLengkap || isNaN(tahunLulus) || tahunLulus < 1960 || tahunLulus > new Date().getFullYear()) {
-      skipped.push(i + 2); // Excel row number (1-indexed + header)
+      skipped.push(i + 2);
       return;
     }
 
-    data.push({ namaLengkap, tahunLulus, noHp, pekerjaan });
+    data.push({ namaLengkap, tahunLulus, noHp, pekerjaan, alamat });
   });
 
   const result = await prisma.alumniImport.createMany({
