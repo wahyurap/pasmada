@@ -2,11 +2,10 @@
 
 import { Suspense, useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const errorParam = searchParams.get("error");
@@ -47,8 +46,8 @@ function LoginForm() {
           setError("Email atau password salah.");
         }
       } else {
-        router.push(callbackUrl);
-        router.refresh();
+        // Full page reload ensures session cookie is sent on next request
+        window.location.href = callbackUrl;
       }
     } catch {
       setError("Terjadi kesalahan. Silakan coba lagi.");
