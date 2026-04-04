@@ -47,6 +47,7 @@ export async function PATCH(
             konten: data.konten,
             ringkasan: data.ringkasan || null,
             penulis: data.penulis || "Alumni",
+            gambar: data.gambar || null,
             published: true,
           },
         });
@@ -60,12 +61,18 @@ export async function PATCH(
           },
         });
       } else if (submission.type === "ALBUM") {
-        await prisma.album.create({
+        const album = await prisma.album.create({
           data: {
             judul: data.judul,
             deskripsi: data.deskripsi || null,
           },
         });
+        const fotos: string[] = Array.isArray(data.fotos) ? data.fotos : [];
+        if (fotos.length > 0) {
+          await prisma.foto.createMany({
+            data: fotos.map((url: string) => ({ albumId: album.id, url })),
+          });
+        }
       } else if (submission.type === "SETTINGS") {
         const updateData: Record<string, string> = {};
         if (data.section === "tentang") {

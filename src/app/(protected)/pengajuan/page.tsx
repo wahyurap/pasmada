@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 type SubmissionType = "BERITA" | "AGENDA" | "ALBUM" | "SETTINGS";
 type SubmissionStatus = "PENDING" | "APPROVED" | "REJECTED";
@@ -47,6 +48,16 @@ function getPreview(type: SubmissionType, dataStr: string): string {
   }
 }
 
+async function uploadFile(file: File, subdir?: string): Promise<string> {
+  const fd = new FormData();
+  fd.append("file", file);
+  if (subdir) fd.append("subdir", subdir);
+  const res = await fetch("/api/upload", { method: "POST", body: fd });
+  if (!res.ok) throw new Error("Gagal mengupload gambar");
+  const json = await res.json();
+  return json.url as string;
+}
+
 export default function PengajuanPage() {
   const { data: session } = useSession();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -57,9 +68,16 @@ export default function PengajuanPage() {
   const [formSuccess, setFormSuccess] = useState("");
   const [settingsTab, setSettingsTab] = useState<"tentang" | "kontak">("tentang");
 
-  const [beritaForm, setBeritaForm] = useState({ judul: "", ringkasan: "", konten: "", penulis: "" });
+  const [beritaForm, setBeritaForm] = useState({ judul: "", ringkasan: "", konten: "", penulis: "", gambar: "" });
+  const [beritaGambarFile, setBeritaGambarFile] = useState<File | null>(null);
+  const [uploadingBeritaGambar, setUploadingBeritaGambar] = useState(false);
+
   const [agendaForm, setAgendaForm] = useState({ judul: "", deskripsi: "", tanggal: "", lokasi: "" });
   const [albumForm, setAlbumForm] = useState({ judul: "", deskripsi: "" });
+  const [albumFotos, setAlbumFotos] = useState<string[]>([]);
+  const [uploadingAlbumFotos, setUploadingAlbumFotos] = useState(false);
+  const albumFotoInputRef = useRef<HTMLInputElement>(null);
+
   const [tentangForm, setTentangForm] = useState({ sejarah: "", visi: "", misi: "" });
   const [kontakForm, setKontakForm] = useState({ alamat: "", email: "", telepon: "", facebook: "", instagram: "", youtube: "" });
 
@@ -90,10 +108,52 @@ export default function PengajuanPage() {
     setModalType(type);
     setFormError("");
     setFormSuccess("");
-    if (type === "BERITA") setBeritaForm({ judul: "", ringkasan: "", konten: "", penulis: session?.user?.name || "" });
+    if (type === "BERITA") {
+      setBeritaForm({ judul: "", ringkasan: "", konten: "", penulis: session?.user?.name || "", gambar: "" });
+      setBeritaGambarFile(null);
+    }
     if (type === "AGENDA") setAgendaForm({ judul: "", deskripsi: "", tanggal: "", lokasi: "" });
-    if (type === "ALBUM") setAlbumForm({ judul: "", deskripsi: "" });
-    if (type === "SETTINGS") { setTentangForm({ sejarah: "", visi: "", misi: "" }); setKontakForm({ alamat: "", email: "", telepon: "", facebook: "", instagram: "", youtube: "" }); setSettingsTab("tentang"); }
+    if (type === "ALBUM") { setAlbumForm({ judul: "", deskripsi: "" }); setAlbumFotos([]); }
+    if (type === "SETTINGS") {
+      setTentangForm({ sejarah: "", visi: "", misi: "" });
+      setKontakForm({ alamat: "", email: "", telepon: "", facebook: "", instagram: "", youtube: "" });
+      setSettingsTab("tentang");
+    }
+  }
+
+  async function handleBeritaGambarChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBeritaGambarFile(file);
+    setUploadingBeritaGambar(true);
+    try {
+      const url = await uploadFile(file, "berita");
+      setBeritaForm((p) => ({ ...p, gambar: url }));
+    } catch {
+      setFormError("Gagal mengupload gambar berita");
+    } finally {
+      setUploadingBeritaGambar(false);
+    }
+  }
+
+  async function handleAlbumFotosChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    setUploadingAlbumFotos(true);
+    setFormError("");
+    try {
+      const urls = await Promise.all(files.map((f) => uploadFile(f, "galeri")));
+      setAlbumFotos((prev) => [...prev, ...urls]);
+    } catch {
+      setFormError("Gagal mengupload beberapa foto");
+    } finally {
+      setUploadingAlbumFotos(false);
+      if (albumFotoInputRef.current) albumFotoInputRef.current.value = "";
+    }
+  }
+
+  function removeFoto(index: number) {
+    setAlbumFotos((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function handleSubmit() {
@@ -101,7 +161,7 @@ export default function PengajuanPage() {
     setFormError("");
     setFormSuccess("");
 
-    let data: Record<string, string> = {};
+    let data: Record<string, unknown> = {};
     if (modalType === "BERITA") {
       if (!beritaForm.judul || !beritaForm.konten) { setFormError("Judul dan konten wajib diisi"); setSubmitting(false); return; }
       data = { ...beritaForm };
@@ -110,7 +170,7 @@ export default function PengajuanPage() {
       data = { ...agendaForm };
     } else if (modalType === "ALBUM") {
       if (!albumForm.judul) { setFormError("Judul wajib diisi"); setSubmitting(false); return; }
-      data = { ...albumForm };
+      data = { ...albumForm, fotos: albumFotos };
     } else if (modalType === "SETTINGS") {
       data = settingsTab === "tentang"
         ? { section: "tentang", ...tentangForm }
@@ -250,6 +310,26 @@ export default function PengajuanPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">Penulis</label>
                     <input type="text" className={inputCls} value={beritaForm.penulis} onChange={(e) => setBeritaForm((p) => ({ ...p, penulis: e.target.value }))} placeholder="Nama penulis" />
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Gambar Cover</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleBeritaGambarChange}
+                      className="block w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
+                    />
+                    {uploadingBeritaGambar && <p className="text-xs text-gray-400 mt-1">Mengupload gambar...</p>}
+                    {beritaForm.gambar && !uploadingBeritaGambar && (
+                      <div className="mt-2 relative w-full h-36 rounded-lg overflow-hidden border border-gray-200">
+                        <Image src={beritaForm.gambar} alt="Preview" fill className="object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => { setBeritaForm((p) => ({ ...p, gambar: "" })); setBeritaGambarFile(null); }}
+                          className="absolute top-1.5 right-1.5 bg-black/60 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-black/80"
+                        >✕</button>
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
 
@@ -283,6 +363,35 @@ export default function PengajuanPage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">Deskripsi</label>
                     <textarea rows={2} className={inputCls + " resize-none"} value={albumForm.deskripsi} onChange={(e) => setAlbumForm((p) => ({ ...p, deskripsi: e.target.value }))} placeholder="Deskripsi album" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Foto-foto</label>
+                    <input
+                      ref={albumFotoInputRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleAlbumFotosChange}
+                      className="block w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
+                    />
+                    {uploadingAlbumFotos && <p className="text-xs text-gray-400 mt-1">Mengupload foto...</p>}
+                    {albumFotos.length > 0 && (
+                      <div className="mt-3 grid grid-cols-3 gap-2">
+                        {albumFotos.map((url, i) => (
+                          <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-gray-200">
+                            <Image src={url} alt={`Foto ${i + 1}`} fill className="object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => removeFoto(i)}
+                              className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-black/80"
+                            >✕</button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {albumFotos.length > 0 && (
+                      <p className="text-xs text-gray-400 mt-1">{albumFotos.length} foto dipilih. Klik + tambah lagi.</p>
+                    )}
                   </div>
                 </>
               )}
@@ -346,7 +455,7 @@ export default function PengajuanPage() {
             <div className="flex gap-3 px-6 pb-6">
               <button
                 onClick={handleSubmit}
-                disabled={submitting}
+                disabled={submitting || uploadingBeritaGambar || uploadingAlbumFotos}
                 className="flex items-center gap-2 px-5 py-2.5 bg-[#991B1B] text-white text-sm font-medium rounded-lg hover:bg-[#7F1D1D] disabled:opacity-60 transition"
               >
                 {submitting && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
