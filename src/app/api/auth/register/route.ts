@@ -88,10 +88,22 @@ export async function POST(request: Request) {
       duplicates.push(
         `Cocok dengan data alumni existing: **${importedMatch.namaLengkap}** (angkatan ${importedMatch.tahunLulus})`
       );
-      // Link the imported record to the new user
+      // Link the existing imported record to the new user
       await prisma.alumniImport.update({
         where: { id: importedMatch.id },
         data: { linkedUserId: newUser.id },
+      });
+    } else {
+      // User not in imported database — add them automatically
+      await prisma.alumniImport.create({
+        data: {
+          namaLengkap,
+          tahunLulus: tahunLulusInt,
+          pekerjaan: pekerjaan || null,
+          alamat: alamat || null,
+          noHp: noHp || null,
+          linkedUserId: newUser.id,
+        },
       });
     }
 
@@ -113,22 +125,22 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Create admin notification if duplicates found
-    if (duplicates.length > 0) {
-      await prisma.adminNotification.create({
-        data: {
-          type: "POTENTIAL_DUPLICATE",
-          message: `Pendaftaran baru berpotensi duplikat: **${namaLengkap}** (${email}, angkatan ${tahunLulusInt})`,
-          data: JSON.stringify({
-            userId: newUser.id,
-            namaLengkap,
-            email,
-            tahunLulus: tahunLulusInt,
-            matches: duplicates,
-          }),
-        },
-      });
-    }
+    // 3. Create admin notification — always for new registrations, flag duplicates
+    await prisma.adminNotification.create({
+      data: {
+        type: duplicates.length > 0 ? "POTENTIAL_DUPLICATE" : "NEW_REGISTRATION",
+        message: duplicates.length > 0
+          ? `Pendaftaran baru berpotensi duplikat: **${namaLengkap}** (${email}, angkatan ${tahunLulusInt})`
+          : `Pendaftaran baru: **${namaLengkap}** (${email}, angkatan ${tahunLulusInt})`,
+        data: JSON.stringify({
+          userId: newUser.id,
+          namaLengkap,
+          email,
+          tahunLulus: tahunLulusInt,
+          ...(duplicates.length > 0 && { matches: duplicates }),
+        }),
+      },
+    });
 
     try {
       await sendVerificationEmail(email, verifyToken);

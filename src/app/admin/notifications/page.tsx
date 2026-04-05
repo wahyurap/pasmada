@@ -108,11 +108,15 @@ export default function AdminNotificationsPage() {
                         className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                           notif.type === "POTENTIAL_DUPLICATE"
                             ? "bg-orange-100 text-orange-700"
+                            : notif.type === "NEW_REGISTRATION"
+                            ? "bg-blue-100 text-blue-700"
                             : "bg-gray-100 text-gray-600"
                         }`}
                       >
                         {notif.type === "POTENTIAL_DUPLICATE"
                           ? "Potensi Duplikat"
+                          : notif.type === "NEW_REGISTRATION"
+                          ? "Pendaftar Baru"
                           : notif.type}
                       </span>
                       {!notif.isRead && (
