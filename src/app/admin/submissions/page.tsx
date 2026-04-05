@@ -46,6 +46,19 @@ function getPreview(type: SubmissionType, dataStr: string): string {
   }
 }
 
+function isEditSubmission(dataStr: string): boolean {
+  try { return !!JSON.parse(dataStr).editTargetId; } catch { return false; }
+}
+
+function getEditLabel(type: SubmissionType, dataStr: string): string {
+  try {
+    const d = JSON.parse(dataStr);
+    if (!d.editTargetId) return "";
+    if (type === "ALBUM") return "Tambah Foto";
+    return "Edit";
+  } catch { return ""; }
+}
+
 export default function AdminSubmissionsPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
@@ -140,10 +153,15 @@ export default function AdminSubmissionsPage() {
                 <div className="px-6 py-5">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1.5">
+                      <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                         <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${TYPE_COLORS[s.type]}`}>
                           {TYPE_LABELS[s.type]}
                         </span>
+                        {isEditSubmission(s.data) && (
+                          <span className="inline-flex px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
+                            {getEditLabel(s.type, s.data)}
+                          </span>
+                        )}
                         <span className="text-sm font-medium text-gray-900 truncate">{getPreview(s.type, s.data)}</span>
                       </div>
                       <div className="flex items-center gap-3 text-xs text-gray-500">
