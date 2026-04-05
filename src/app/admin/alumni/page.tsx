@@ -38,6 +38,16 @@ export default function AdminAlumniPage() {
   const [importing, setImporting] = useState(false);
   const [importResult, setImportResult] = useState<{ inserted: number; skipped: number; total: number } | null>(null);
 
+  const [showTambahModal, setShowTambahModal] = useState(false);
+  const [tambahForm, setTambahForm] = useState<EditForm>({
+    namaLengkap: "",
+    tahunLulus: "",
+    pekerjaan: "",
+    alamat: "",
+    noHp: "",
+  });
+  const [tambahLoading, setTambahLoading] = useState(false);
+
   const [editTarget, setEditTarget] = useState<Alumni | null>(null);
   const [editForm, setEditForm] = useState<EditForm>({
     namaLengkap: "",
@@ -149,6 +159,33 @@ export default function AdminAlumniPage() {
     }
   }
 
+  async function handleTambah(e: React.FormEvent) {
+    e.preventDefault();
+    setTambahLoading(true);
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/admin/alumni", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(tambahForm),
+      });
+      if (res.ok) {
+        setShowTambahModal(false);
+        setTambahForm({ namaLengkap: "", tahunLulus: "", pekerjaan: "", alamat: "", noHp: "" });
+        setSuccessMsg("Alumni berhasil ditambahkan");
+        setTimeout(() => setSuccessMsg(""), 3000);
+        fetchAlumni();
+      } else {
+        const data = await res.json();
+        setErrorMsg(data.error || "Gagal menambahkan alumni");
+      }
+    } catch {
+      setErrorMsg("Terjadi kesalahan jaringan");
+    } finally {
+      setTambahLoading(false);
+    }
+  }
+
   async function handleImport(e: React.FormEvent) {
     e.preventDefault();
     if (!importFile) return;
@@ -187,6 +224,12 @@ export default function AdminAlumniPage() {
             {meta ? `Total: ${meta.total} alumni` : ""}
           </p>
         </div>
+        <button
+          onClick={() => { setShowTambahModal(true); setErrorMsg(""); }}
+          className="px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-red-800 transition"
+        >
+          + Tambah Alumni
+        </button>
       </div>
 
       {/* Import Excel */}
@@ -420,6 +463,88 @@ export default function AdminAlumniPage() {
                   className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-blue-800 disabled:opacity-50 transition"
                 >
                   {editLoading ? "Menyimpan..." : "Simpan"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Tambah Alumni Modal */}
+      {showTambahModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-lg mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-5">Tambah Alumni</h3>
+            <form onSubmit={handleTambah} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Nama Lengkap <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={tambahForm.namaLengkap}
+                  onChange={(e) => setTambahForm({ ...tambahForm, namaLengkap: e.target.value })}
+                  required
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Tahun Lulus <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="number"
+                  value={tambahForm.tahunLulus}
+                  onChange={(e) => setTambahForm({ ...tambahForm, tahunLulus: e.target.value })}
+                  required
+                  min="1950"
+                  max={currentYear}
+                  placeholder="contoh: 2010"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Pekerjaan</label>
+                <input
+                  type="text"
+                  value={tambahForm.pekerjaan}
+                  onChange={(e) => setTambahForm({ ...tambahForm, pekerjaan: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
+                <input
+                  type="text"
+                  value={tambahForm.alamat}
+                  onChange={(e) => setTambahForm({ ...tambahForm, alamat: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">No HP</label>
+                <input
+                  type="text"
+                  value={tambahForm.noHp}
+                  onChange={(e) => setTambahForm({ ...tambahForm, noHp: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                />
+              </div>
+              {errorMsg && <p className="text-sm text-red-600">{errorMsg}</p>}
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => { setShowTambahModal(false); setErrorMsg(""); }}
+                  className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={tambahLoading}
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#991B1B] rounded-lg hover:bg-red-800 disabled:opacity-50 transition"
+                >
+                  {tambahLoading ? "Menyimpan..." : "Simpan"}
                 </button>
               </div>
             </form>

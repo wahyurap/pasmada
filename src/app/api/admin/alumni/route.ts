@@ -71,3 +71,45 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+export async function POST(request: NextRequest) {
+  try {
+    const session = await auth();
+    if (!session || (session.user as { role: string }).role !== "ADMIN") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const body = await request.json();
+    const { namaLengkap, tahunLulus, pekerjaan, alamat, noHp } = body;
+
+    if (!namaLengkap || !tahunLulus) {
+      return NextResponse.json(
+        { error: "Nama lengkap dan tahun lulus wajib diisi" },
+        { status: 400 }
+      );
+    }
+
+    const tahunLulusInt = parseInt(tahunLulus);
+    if (isNaN(tahunLulusInt)) {
+      return NextResponse.json({ error: "Tahun lulus tidak valid" }, { status: 400 });
+    }
+
+    const alumni = await prisma.alumniImport.create({
+      data: {
+        namaLengkap: namaLengkap.trim(),
+        tahunLulus: tahunLulusInt,
+        pekerjaan: pekerjaan?.trim() || null,
+        alamat: alamat?.trim() || null,
+        noHp: noHp?.trim() || null,
+      },
+    });
+
+    return NextResponse.json({ alumni }, { status: 201 });
+  } catch (error) {
+    console.error("Admin alumni POST error:", error);
+    return NextResponse.json(
+      { error: "Terjadi kesalahan server" },
+      { status: 500 }
+    );
+  }
+}
