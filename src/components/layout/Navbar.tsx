@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/tentang", label: "Tentang" },
   { href: "/profil-alumni", label: "Profil Alumni" },
   { href: "/info", label: "Info" },
+  { href: "/markombur", label: "Markombur" },
   { href: "/berita", label: "Berita" },
   { href: "/agenda", label: "Agenda" },
   { href: "/galeri", label: "Galeri" },

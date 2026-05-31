@@ -26,6 +26,9 @@ model User {
   alumni          Alumni?
   alumniImport    AlumniImport?
   submissions     Submission[]
+  markomburTopics    MarkomburTopic[]
+  markomburKomentar  MarkomburKomentar[]
+  markomburReports   MarkomburReport[]
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 
@@ -216,4 +219,48 @@ model AlumniPilihan {
   updatedAt    DateTime @updatedAt
 
   @@index([published, createdAt])
+}
+
+// Markombur — forum diskusi terbuka untuk alumni
+model MarkomburTopic {
+  id          String              @id @default(cuid())
+  judul       String
+  deskripsi   String              @db.Text
+  authorId    String
+  author      User                @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  komentar    MarkomburKomentar[]
+  reports     MarkomburReport[]
+  isLocked    Boolean             @default(false)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@index([createdAt])
+}
+
+model MarkomburKomentar {
+  id        String              @id @default(cuid())
+  topicId   String
+  topic     MarkomburTopic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User                @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  konten    String              @db.Text
+  reports   MarkomburReport[]
+  createdAt DateTime            @default(now())
+
+  @@index([topicId, createdAt])
+}
+
+model MarkomburReport {
+  id          String              @id @default(cuid())
+  reporterId  String
+  reporter    User                @relation(fields: [reporterId], references: [id], onDelete: Cascade)
+  topicId     String?
+  topic       MarkomburTopic?     @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  komentarId  String?
+  komentar    MarkomburKomentar?  @relation(fields: [komentarId], references: [id], onDelete: Cascade)
+  alasan      String              @db.Text
+  resolved    Boolean             @default(false)
+  createdAt   DateTime            @default(now())
+
+  @@index([resolved, createdAt])
 }
