@@ -10,7 +10,7 @@ export default async function TentangPage() {
   const visi = s?.visi || "Menjadi organisasi alumni yang solid, profesional, dan berkontribusi nyata bagi kemajuan almamater SMAN 1 Panyabungan serta kesejahteraan anggotanya.";
   const misiLines = (s?.misi || "Mempererat tali silaturahmi antar alumni lintas angkatan\nMendukung pengembangan dan kemajuan SMAN 1 Panyabungan\nMemfasilitasi jejaring dan pengembangan karir alumni\nMenyelenggarakan kegiatan sosial dan kepedulian masyarakat").split("\n").filter(Boolean);
 
-  let struktur: { jabatan: string; nama: string }[] = [];
+  let struktur: { jabatan: string; nama: string; foto?: string }[] = [];
   try { struktur = JSON.parse(s?.strukturOrganisasi || "[]"); } catch {}
   if (!struktur.length) {
     struktur = [
@@ -80,12 +80,20 @@ export default async function TentangPage() {
           <div className="w-16 h-1 bg-[#991B1B] mb-8 rounded-full" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {struktur.map((item, i) => (
-              <div key={i} className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100">
-                <div className="w-16 h-16 bg-[#991B1B]/10 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-[#991B1B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
+              <div key={i} className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100 hover:shadow-md transition">
+                {item.foto ? (
+                  <img
+                    src={item.foto}
+                    alt={item.nama || item.jabatan}
+                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-sm"
+                  />
+                ) : (
+                  <div className="w-24 h-24 bg-[#991B1B]/10 rounded-full mx-auto mb-4 flex items-center justify-center border-4 border-white shadow-sm">
+                    <svg className="w-10 h-10 text-[#991B1B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                )}
                 <h4 className="font-semibold text-gray-900">{item.nama || "-"}</h4>
                 <p className="text-sm text-[#991B1B] mt-1">{item.jabatan}</p>
               </div>

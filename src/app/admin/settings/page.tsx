@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-interface OrgMember { jabatan: string; nama: string }
+interface OrgMember { jabatan: string; nama: string; foto?: string }
 
 interface Settings {
   namaOrganisasi: string;
@@ -34,14 +34,24 @@ const empty: Settings = {
   visi: "",
   misi: "",
   strukturOrganisasi: [
-    { jabatan: "Ketua Umum", nama: "" },
-    { jabatan: "Wakil Ketua", nama: "" },
-    { jabatan: "Sekretaris", nama: "" },
-    { jabatan: "Bendahara", nama: "" },
-    { jabatan: "Humas", nama: "" },
-    { jabatan: "Koordinator Wilayah", nama: "" },
+    { jabatan: "Ketua Umum", nama: "", foto: "" },
+    { jabatan: "Wakil Ketua", nama: "", foto: "" },
+    { jabatan: "Sekretaris", nama: "", foto: "" },
+    { jabatan: "Bendahara", nama: "", foto: "" },
+    { jabatan: "Humas", nama: "", foto: "" },
+    { jabatan: "Koordinator Wilayah", nama: "", foto: "" },
   ],
 };
+
+async function uploadPengurusFoto(file: File): Promise<string | null> {
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("subdir", "pengurus");
+  const res = await fetch("/api/upload", { method: "POST", body: fd });
+  if (!res.ok) return null;
+  const data = await res.json();
+  return (data.url as string) || null;
+}
 
 export default function AdminSettingsPage() {
   const [form, setForm] = useState<Settings>(empty);
@@ -223,33 +233,88 @@ export default function AdminSettingsPage() {
             <label className={labelClass}>Struktur Organisasi</label>
             <div className="space-y-2">
               {form.strukturOrganisasi.map((item, i) => (
-                <div key={i} className="flex gap-2 items-center">
-                  <input
-                    type="text"
-                    value={item.jabatan}
-                    onChange={(e) => {
-                      const s = [...form.strukturOrganisasi];
-                      s[i] = { ...s[i], jabatan: e.target.value };
-                      setForm((p) => ({ ...p, strukturOrganisasi: s }));
-                    }}
-                    placeholder="Jabatan"
-                    className="w-1/2 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
-                  />
-                  <input
-                    type="text"
-                    value={item.nama}
-                    onChange={(e) => {
-                      const s = [...form.strukturOrganisasi];
-                      s[i] = { ...s[i], nama: e.target.value };
-                      setForm((p) => ({ ...p, strukturOrganisasi: s }));
-                    }}
-                    placeholder="Nama"
-                    className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
-                  />
+                <div key={i} className="flex gap-2 items-start p-3 bg-gray-50 rounded-lg">
+                  {/* Foto preview + upload */}
+                  <div className="flex-shrink-0">
+                    <label className="cursor-pointer block">
+                      {item.foto ? (
+                        <img
+                          src={item.foto}
+                          alt={item.nama || "Foto pengurus"}
+                          className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-sm hover:opacity-80 transition"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 rounded-full bg-white border-2 border-dashed border-gray-300 flex items-center justify-center hover:border-[#991B1B] transition">
+                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          const url = await uploadPengurusFoto(file);
+                          if (url) {
+                            const s = [...form.strukturOrganisasi];
+                            s[i] = { ...s[i], foto: url };
+                            setForm((p) => ({ ...p, strukturOrganisasi: s }));
+                          } else {
+                            setErrorMsg("Gagal upload foto pengurus");
+                          }
+                          e.target.value = "";
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                  <div className="flex-1 space-y-2">
+                    <input
+                      type="text"
+                      value={item.jabatan}
+                      onChange={(e) => {
+                        const s = [...form.strukturOrganisasi];
+                        s[i] = { ...s[i], jabatan: e.target.value };
+                        setForm((p) => ({ ...p, strukturOrganisasi: s }));
+                      }}
+                      placeholder="Jabatan"
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                    />
+                    <input
+                      type="text"
+                      value={item.nama}
+                      onChange={(e) => {
+                        const s = [...form.strukturOrganisasi];
+                        s[i] = { ...s[i], nama: e.target.value };
+                        setForm((p) => ({ ...p, strukturOrganisasi: s }));
+                      }}
+                      placeholder="Nama"
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+                    />
+                    {item.foto && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const s = [...form.strukturOrganisasi];
+                          s[i] = { ...s[i], foto: "" };
+                          setForm((p) => ({ ...p, strukturOrganisasi: s }));
+                        }}
+                        className="text-xs text-gray-500 hover:text-red-600 transition"
+                      >
+                        Hapus foto
+                      </button>
+                    )}
+                  </div>
+
                   <button
                     type="button"
                     onClick={() => setForm((p) => ({ ...p, strukturOrganisasi: p.strukturOrganisasi.filter((_, j) => j !== i) }))}
-                    className="p-2 text-red-400 hover:text-red-600 transition"
+                    className="p-2 text-red-400 hover:text-red-600 transition flex-shrink-0"
+                    aria-label="Hapus anggota"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -259,7 +324,7 @@ export default function AdminSettingsPage() {
               ))}
               <button
                 type="button"
-                onClick={() => setForm((p) => ({ ...p, strukturOrganisasi: [...p.strukturOrganisasi, { jabatan: "", nama: "" }] }))}
+                onClick={() => setForm((p) => ({ ...p, strukturOrganisasi: [...p.strukturOrganisasi, { jabatan: "", nama: "", foto: "" }] }))}
                 className="mt-1 text-sm text-[#991B1B] hover:underline"
               >
                 + Tambah anggota
