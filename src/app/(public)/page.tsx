@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 import HeroSlideshow from "@/components/HeroSlideshow";
+import RekeningCard from "@/components/RekeningCard";
 
 export const dynamic = "force-dynamic";
 
@@ -141,6 +142,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Info Rekening Resmi */}
+      <RekeningCard />
 
       {/* Berita Terbaru */}
       {beritaTerbaru.length > 0 && (
