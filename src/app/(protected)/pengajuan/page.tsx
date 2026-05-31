@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
-type SubmissionType = "BERITA" | "AGENDA" | "ALBUM" | "SETTINGS" | "ALUMNI_PILIHAN";
+type SubmissionType = "BERITA" | "AGENDA" | "ALBUM" | "SETTINGS" | "ALUMNI_PILIHAN" | "INFO";
 type EditMode = "BERITA_EDIT" | "AGENDA_EDIT" | "ALBUM_FOTO";
 type ModalMode = SubmissionType | EditMode | null;
 type SubmissionStatus = "PENDING" | "APPROVED" | "REJECTED";
@@ -37,6 +37,7 @@ const TYPE_LABELS: Record<SubmissionType, string> = {
   ALBUM: "Album",
   SETTINGS: "Pengaturan",
   ALUMNI_PILIHAN: "Alumni Pilihan",
+  INFO: "Info",
 };
 
 const STATUS_BADGE: Record<SubmissionStatus, string> = {
@@ -107,6 +108,9 @@ export default function PengajuanPage() {
   const [alumniPilihanForm, setAlumniPilihanForm] = useState({ nama: "", tahunLulus: "", pekerjaan: "", foto: "", ringkasan: "", kisah: "" });
   const [uploadingAlumniPilihanFoto, setUploadingAlumniPilihanFoto] = useState(false);
 
+  const [infoForm, setInfoForm] = useState({ judul: "", kategori: "LOKER" as "LOKER" | "USAHA" | "AGEN" | "LAINNYA", ringkasan: "", konten: "", gambar: "", kontak: "", link: "", expiredAt: "" });
+  const [uploadingInfoGambar, setUploadingInfoGambar] = useState(false);
+
   const fetchSubmissions = useCallback(async () => {
     setLoading(true);
     try {
@@ -168,6 +172,9 @@ export default function PengajuanPage() {
     }
     if (mode === "ALUMNI_PILIHAN") {
       setAlumniPilihanForm({ nama: session?.user?.name || "", tahunLulus: "", pekerjaan: "", foto: "", ringkasan: "", kisah: "" });
+    }
+    if (mode === "INFO") {
+      setInfoForm({ judul: "", kategori: "LOKER", ringkasan: "", konten: "", gambar: "", kontak: "", link: "", expiredAt: "" });
     }
     if (mode === "BERITA_EDIT" || mode === "AGENDA_EDIT" || mode === "ALBUM_FOTO") {
       loadExistingItems(mode as EditMode);
@@ -285,6 +292,14 @@ export default function PengajuanPage() {
       }
       type = "ALUMNI_PILIHAN";
       data = { ...alumniPilihanForm };
+    } else if (modalMode === "INFO") {
+      if (!infoForm.judul || !infoForm.ringkasan || !infoForm.konten) {
+        setFormError("Judul, ringkasan, dan konten wajib diisi");
+        setSubmitting(false);
+        return;
+      }
+      type = "INFO";
+      data = { ...infoForm };
     } else {
       setSubmitting(false);
       return;
@@ -322,6 +337,7 @@ export default function PengajuanPage() {
       case "ALBUM_FOTO": return editStep === 1 ? "Pilih Album untuk Ditambah Foto" : `Tambah Foto ke: ${selectedItem?.judul}`;
       case "SETTINGS": return "Ajukan Perubahan Pengaturan";
       case "ALUMNI_PILIHAN": return "Usulkan Profil Alumni Pilihan";
+      case "INFO": return "Ajukan Info Baru";
       default: return "";
     }
   }
@@ -338,7 +354,7 @@ export default function PengajuanPage() {
         <div className="mb-3">
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Buat Konten Baru</p>
           <div className="flex flex-wrap gap-3">
-            {(["BERITA", "AGENDA", "ALBUM", "SETTINGS", "ALUMNI_PILIHAN"] as SubmissionType[]).map((type) => (
+            {(["BERITA", "AGENDA", "ALBUM", "SETTINGS", "ALUMNI_PILIHAN", "INFO"] as SubmissionType[]).map((type) => (
               <button
                 key={type}
                 onClick={() => openModal(type)}
@@ -691,6 +707,76 @@ export default function PengajuanPage() {
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">Kisah Perjalanan <span className="text-red-500">*</span></label>
                         <textarea rows={10} className={inputCls + " resize-none"} value={alumniPilihanForm.kisah} onChange={(e) => setAlumniPilihanForm((p) => ({ ...p, kisah: e.target.value }))} placeholder="Tulis kisah lengkap perjalanan pendidikan & karir alumni..." />
+                      </div>
+                    </>
+                  )}
+
+                  {modalMode === "INFO" && (
+                    <>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1.5">Judul <span className="text-red-500">*</span></label>
+                          <input type="text" className={inputCls} value={infoForm.judul} onChange={(e) => setInfoForm((p) => ({ ...p, judul: e.target.value }))} placeholder="Judul info" />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1.5">Kategori <span className="text-red-500">*</span></label>
+                          <select className={inputCls} value={infoForm.kategori} onChange={(e) => setInfoForm((p) => ({ ...p, kategori: e.target.value as typeof infoForm.kategori }))}>
+                            <option value="LOKER">Lowongan Kerja</option>
+                            <option value="USAHA">Usaha Alumni</option>
+                            <option value="AGEN">Agen</option>
+                            <option value="LAINNYA">Lainnya</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Ringkasan <span className="text-red-500">*</span></label>
+                        <textarea rows={2} className={inputCls + " resize-none"} value={infoForm.ringkasan} onChange={(e) => setInfoForm((p) => ({ ...p, ringkasan: e.target.value }))} placeholder="Ringkasan singkat" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Konten <span className="text-red-500">*</span></label>
+                        <textarea rows={8} className={inputCls + " resize-none"} value={infoForm.konten} onChange={(e) => setInfoForm((p) => ({ ...p, konten: e.target.value }))} placeholder="Detail info..." />
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1.5">Kontak (HP/Email/WA)</label>
+                          <input type="text" className={inputCls} value={infoForm.kontak} onChange={(e) => setInfoForm((p) => ({ ...p, kontak: e.target.value }))} placeholder="0812..." />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1.5">Tautan</label>
+                          <input type="url" className={inputCls} value={infoForm.link} onChange={(e) => setInfoForm((p) => ({ ...p, link: e.target.value }))} placeholder="https://..." />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Berlaku Sampai (opsional)</label>
+                        <input type="date" className={inputCls} value={infoForm.expiredAt} onChange={(e) => setInfoForm((p) => ({ ...p, expiredAt: e.target.value }))} />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Gambar</label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            setUploadingInfoGambar(true);
+                            try {
+                              const url = await uploadFile(file, "info");
+                              setInfoForm((p) => ({ ...p, gambar: url }));
+                            } catch {
+                              setFormError("Gagal upload gambar");
+                            } finally {
+                              setUploadingInfoGambar(false);
+                            }
+                          }}
+                          className="block w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
+                        />
+                        {uploadingInfoGambar && <p className="text-xs text-gray-400 mt-1">Mengupload gambar...</p>}
+                        {infoForm.gambar && (
+                          <div className="mt-2 relative w-32 h-24 rounded-lg overflow-hidden border border-gray-200">
+                            <Image src={infoForm.gambar} alt="Preview" fill className="object-cover" />
+                            <button type="button" onClick={() => setInfoForm((p) => ({ ...p, gambar: "" }))} className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-black/80">✕</button>
+                          </div>
+                        )}
                       </div>
                     </>
                   )}

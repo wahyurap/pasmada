@@ -123,6 +123,14 @@ enum SubmissionType {
   ALBUM
   SETTINGS
   ALUMNI_PILIHAN
+  INFO
+}
+
+enum InfoKategori {
+  LOKER
+  USAHA
+  AGEN
+  LAINNYA
 }
 
 enum SubmissionStatus {
@@ -172,6 +180,26 @@ model AdminNotification {
 
   @@index([isRead])
   @@index([createdAt])
+}
+
+// Info — lowongan kerja, promosi usaha alumni, agen, dll
+model Info {
+  id          String       @id @default(cuid())
+  judul       String
+  kategori    InfoKategori
+  ringkasan   String       @db.Text
+  konten      String       @db.Text
+  gambar      String?
+  kontak      String?
+  link        String?
+  expiredAt   DateTime?
+  published   Boolean      @default(true)
+  createdBy   String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([published, kategori, createdAt])
+  @@index([expiredAt])
 }
 
 // Profil Alumni Pilihan — kisah senior sukses untuk inspirasi

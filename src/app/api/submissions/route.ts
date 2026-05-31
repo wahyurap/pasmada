@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 
-const VALID_TYPES = ["BERITA", "AGENDA", "ALBUM", "SETTINGS", "ALUMNI_PILIHAN"];
+const VALID_TYPES = ["BERITA", "AGENDA", "ALBUM", "SETTINGS", "ALUMNI_PILIHAN", "INFO"];
 
 export async function GET(request: NextRequest) {
   try {

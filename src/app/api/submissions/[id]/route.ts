@@ -147,6 +147,21 @@ export async function PATCH(
             published: true,
           },
         });
+      } else if (submission.type === "INFO") {
+        await prisma.info.create({
+          data: {
+            judul: data.judul,
+            kategori: data.kategori,
+            ringkasan: data.ringkasan,
+            konten: data.konten,
+            gambar: data.gambar || null,
+            kontak: data.kontak || null,
+            link: data.link || null,
+            expiredAt: data.expiredAt ? new Date(data.expiredAt) : null,
+            published: true,
+            createdBy: submission.userId,
+          },
+        });
       }
     }
 
