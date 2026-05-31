@@ -122,6 +122,7 @@ enum SubmissionType {
   AGENDA
   ALBUM
   SETTINGS
+  ALUMNI_PILIHAN
 }
 
 enum SubmissionStatus {
@@ -171,4 +172,20 @@ model AdminNotification {
 
   @@index([isRead])
   @@index([createdAt])
+}
+
+// Profil Alumni Pilihan — kisah senior sukses untuk inspirasi
+model AlumniPilihan {
+  id           String   @id @default(cuid())
+  nama         String
+  tahunLulus   Int
+  pekerjaan    String
+  foto         String?
+  ringkasan    String   @db.Text
+  kisah        String   @db.Text
+  published    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([published, createdAt])
 }

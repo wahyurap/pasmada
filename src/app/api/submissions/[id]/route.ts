@@ -135,6 +135,18 @@ export async function PATCH(
           update: updateData,
           create: { id: "default", ...updateData },
         });
+      } else if (submission.type === "ALUMNI_PILIHAN") {
+        await prisma.alumniPilihan.create({
+          data: {
+            nama: data.nama,
+            tahunLulus: parseInt(data.tahunLulus),
+            pekerjaan: data.pekerjaan,
+            foto: data.foto || null,
+            ringkasan: data.ringkasan,
+            kisah: data.kisah,
+            published: true,
+          },
+        });
       }
     }
 

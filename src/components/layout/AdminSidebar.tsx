@@ -51,6 +51,16 @@ const sidebarLinks = [
     ),
   },
   {
+    href: "/admin/profil-alumni",
+    label: "Profil Alumni",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 12c0 4.142-3.358 7.5-7.5 7.5S4.5 16.142 4.5 12 7.858 4.5 12 4.5s7.5 3.358 7.5 7.5z" />
+      </svg>
+    ),
+  },
+  {
     href: "/admin/submissions",
     label: "Pengajuan",
     icon: (

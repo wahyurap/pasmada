@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
-type SubmissionType = "BERITA" | "AGENDA" | "ALBUM" | "SETTINGS";
+type SubmissionType = "BERITA" | "AGENDA" | "ALBUM" | "SETTINGS" | "ALUMNI_PILIHAN";
 type EditMode = "BERITA_EDIT" | "AGENDA_EDIT" | "ALBUM_FOTO";
 type ModalMode = SubmissionType | EditMode | null;
 type SubmissionStatus = "PENDING" | "APPROVED" | "REJECTED";
@@ -36,6 +36,7 @@ const TYPE_LABELS: Record<SubmissionType, string> = {
   AGENDA: "Agenda",
   ALBUM: "Album",
   SETTINGS: "Pengaturan",
+  ALUMNI_PILIHAN: "Alumni Pilihan",
 };
 
 const STATUS_BADGE: Record<SubmissionStatus, string> = {
@@ -103,6 +104,9 @@ export default function PengajuanPage() {
   const [tentangForm, setTentangForm] = useState({ sejarah: "", visi: "", misi: "" });
   const [kontakForm, setKontakForm] = useState({ alamat: "", email: "", telepon: "", facebook: "", instagram: "", youtube: "" });
 
+  const [alumniPilihanForm, setAlumniPilihanForm] = useState({ nama: "", tahunLulus: "", pekerjaan: "", foto: "", ringkasan: "", kisah: "" });
+  const [uploadingAlumniPilihanFoto, setUploadingAlumniPilihanFoto] = useState(false);
+
   const fetchSubmissions = useCallback(async () => {
     setLoading(true);
     try {
@@ -161,6 +165,9 @@ export default function PengajuanPage() {
       setTentangForm({ sejarah: "", visi: "", misi: "" });
       setKontakForm({ alamat: "", email: "", telepon: "", facebook: "", instagram: "", youtube: "" });
       setSettingsTab("tentang");
+    }
+    if (mode === "ALUMNI_PILIHAN") {
+      setAlumniPilihanForm({ nama: session?.user?.name || "", tahunLulus: "", pekerjaan: "", foto: "", ringkasan: "", kisah: "" });
     }
     if (mode === "BERITA_EDIT" || mode === "AGENDA_EDIT" || mode === "ALBUM_FOTO") {
       loadExistingItems(mode as EditMode);
@@ -270,6 +277,14 @@ export default function PengajuanPage() {
       data = settingsTab === "tentang"
         ? { section: "tentang", ...tentangForm }
         : { section: "kontak", ...kontakForm };
+    } else if (modalMode === "ALUMNI_PILIHAN") {
+      if (!alumniPilihanForm.nama || !alumniPilihanForm.tahunLulus || !alumniPilihanForm.pekerjaan || !alumniPilihanForm.ringkasan || !alumniPilihanForm.kisah) {
+        setFormError("Nama, tahun lulus, pekerjaan, ringkasan, dan kisah wajib diisi");
+        setSubmitting(false);
+        return;
+      }
+      type = "ALUMNI_PILIHAN";
+      data = { ...alumniPilihanForm };
     } else {
       setSubmitting(false);
       return;
@@ -306,6 +321,7 @@ export default function PengajuanPage() {
       case "ALBUM": return "Ajukan Album Baru";
       case "ALBUM_FOTO": return editStep === 1 ? "Pilih Album untuk Ditambah Foto" : `Tambah Foto ke: ${selectedItem?.judul}`;
       case "SETTINGS": return "Ajukan Perubahan Pengaturan";
+      case "ALUMNI_PILIHAN": return "Usulkan Profil Alumni Pilihan";
       default: return "";
     }
   }
@@ -322,7 +338,7 @@ export default function PengajuanPage() {
         <div className="mb-3">
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Buat Konten Baru</p>
           <div className="flex flex-wrap gap-3">
-            {(["BERITA", "AGENDA", "ALBUM", "SETTINGS"] as SubmissionType[]).map((type) => (
+            {(["BERITA", "AGENDA", "ALBUM", "SETTINGS", "ALUMNI_PILIHAN"] as SubmissionType[]).map((type) => (
               <button
                 key={type}
                 onClick={() => openModal(type)}
@@ -622,6 +638,61 @@ export default function PengajuanPage() {
                         <p className="text-xs text-gray-400 mt-1">{albumFotos.length} foto dipilih.</p>
                       )}
                     </div>
+                  )}
+
+                  {modalMode === "ALUMNI_PILIHAN" && (
+                    <>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1.5">Nama Lengkap <span className="text-red-500">*</span></label>
+                          <input type="text" className={inputCls} value={alumniPilihanForm.nama} onChange={(e) => setAlumniPilihanForm((p) => ({ ...p, nama: e.target.value }))} placeholder="Nama alumni" />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1.5">Tahun Lulus <span className="text-red-500">*</span></label>
+                          <input type="number" min="1960" max={new Date().getFullYear()} className={inputCls} value={alumniPilihanForm.tahunLulus} onChange={(e) => setAlumniPilihanForm((p) => ({ ...p, tahunLulus: e.target.value }))} placeholder="2010" />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Pekerjaan / Jabatan <span className="text-red-500">*</span></label>
+                        <input type="text" className={inputCls} value={alumniPilihanForm.pekerjaan} onChange={(e) => setAlumniPilihanForm((p) => ({ ...p, pekerjaan: e.target.value }))} placeholder="Contoh: Dokter Spesialis di RSCM" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Foto</label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            setUploadingAlumniPilihanFoto(true);
+                            try {
+                              const url = await uploadFile(file, "alumni-pilihan");
+                              setAlumniPilihanForm((p) => ({ ...p, foto: url }));
+                            } catch {
+                              setFormError("Gagal upload foto");
+                            } finally {
+                              setUploadingAlumniPilihanFoto(false);
+                            }
+                          }}
+                          className="block w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
+                        />
+                        {uploadingAlumniPilihanFoto && <p className="text-xs text-gray-400 mt-1">Mengupload foto...</p>}
+                        {alumniPilihanForm.foto && (
+                          <div className="mt-2 relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
+                            <Image src={alumniPilihanForm.foto} alt="Preview" fill className="object-cover" />
+                            <button type="button" onClick={() => setAlumniPilihanForm((p) => ({ ...p, foto: "" }))} className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-black/80">✕</button>
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Ringkasan <span className="text-red-500">*</span></label>
+                        <textarea rows={3} className={inputCls + " resize-none"} value={alumniPilihanForm.ringkasan} onChange={(e) => setAlumniPilihanForm((p) => ({ ...p, ringkasan: e.target.value }))} placeholder="Ringkasan singkat untuk kartu daftar" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Kisah Perjalanan <span className="text-red-500">*</span></label>
+                        <textarea rows={10} className={inputCls + " resize-none"} value={alumniPilihanForm.kisah} onChange={(e) => setAlumniPilihanForm((p) => ({ ...p, kisah: e.target.value }))} placeholder="Tulis kisah lengkap perjalanan pendidikan & karir alumni..." />
+                      </div>
+                    </>
                   )}
 
                   {modalMode === "SETTINGS" && (
