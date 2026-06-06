@@ -81,7 +81,7 @@ export default function TambahBeritaPage() {
           </svg>
         </Link>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Tambah Kolom</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Tambah Tulisan</h2>
           <p className="text-gray-500 mt-0.5 text-sm">Buat tulisan baru: berita, artikel, opini, atau cerpen</p>
         </div>
       </div>

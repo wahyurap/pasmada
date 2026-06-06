@@ -53,7 +53,7 @@ export default async function HomePage() {
   const stats = [
     { label: "Alumni Terdaftar", value: alumniCount },
     { label: "Angkatan", value: angkatanCount },
-    { label: "Kolom", value: beritaCount },
+    { label: "Suara Alumni", value: beritaCount },
     { label: "Kegiatan", value: agendaCount },
   ];
 
@@ -153,7 +153,7 @@ export default async function HomePage() {
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h2 className="text-3xl font-bold text-gray-900">
-                  Kolom Terbaru
+                  Suara Alumni Terbaru
                 </h2>
                 <div className="w-16 h-1 bg-[#991B1B] mt-2 rounded-full" />
               </div>

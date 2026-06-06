@@ -32,7 +32,7 @@ interface ExistingItem {
 }
 
 const TYPE_LABELS: Record<SubmissionType, string> = {
-  BERITA: "Kolom",
+  BERITA: "Tulisan",
   AGENDA: "Agenda",
   ALBUM: "Album",
   SETTINGS: "Pengaturan",
@@ -334,7 +334,7 @@ export default function PengajuanPage() {
   function getModalTitle() {
     switch (modalMode) {
       case "BERITA": return "Ajukan Tulisan Baru (Berita / Artikel / Opini / Cerpen)";
-      case "BERITA_EDIT": return editStep === 1 ? "Pilih Tulisan yang Ingin Diedit" : `Edit Kolom: ${selectedItem?.judul}`;
+      case "BERITA_EDIT": return editStep === 1 ? "Pilih Tulisan yang Ingin Diedit" : `Edit Tulisan: ${selectedItem?.judul}`;
       case "AGENDA": return "Ajukan Agenda Baru";
       case "AGENDA_EDIT": return editStep === 1 ? "Pilih Agenda yang Ingin Diedit" : `Edit Agenda: ${selectedItem?.judul}`;
       case "ALBUM": return "Ajukan Album Baru";
@@ -379,7 +379,7 @@ export default function PengajuanPage() {
               onClick={() => openModal("BERITA_EDIT")}
               className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
             >
-              ✏️ Edit Kolom
+              ✏️ Edit Tulisan
             </button>
             <button
               onClick={() => openModal("AGENDA_EDIT")}

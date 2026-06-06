@@ -11,7 +11,7 @@ const navLinks = [
   { href: "/profil-alumni", label: "Profil Alumni" },
   { href: "/info", label: "Info" },
   { href: "/markombur", label: "Markombur" },
-  { href: "/berita", label: "Kolom" },
+  { href: "/berita", label: "Suara Alumni" },
   { href: "/agenda", label: "Agenda" },
   { href: "/galeri", label: "Galeri" },
   { href: "/kontak", label: "Kontak" },

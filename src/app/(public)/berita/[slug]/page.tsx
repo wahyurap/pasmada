@@ -56,7 +56,7 @@ export default async function BeritaDetailPage({
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            Kembali ke Kolom
+            Kembali ke Suara Alumni
           </Link>
           {(() => {
             const KAT_LABEL: Record<string, string> = { BERITA: "Berita", ARTIKEL: "Artikel", OPINI: "Opini", CERPEN: "Cerpen" };

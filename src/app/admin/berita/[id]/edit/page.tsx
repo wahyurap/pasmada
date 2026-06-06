@@ -145,7 +145,7 @@ export default function EditBeritaPage({
           </svg>
         </Link>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Edit Kolom</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Edit Tulisan</h2>
           <p className="text-gray-500 mt-0.5 text-sm">Perbarui tulisan</p>
         </div>
       </div>

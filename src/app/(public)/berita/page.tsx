@@ -27,7 +27,7 @@ function isKategori(s: string | undefined): s is Kategori {
   return !!s && (KATEGORI_KEYS as readonly string[]).includes(s);
 }
 
-export default async function KolomPage({
+export default async function SuaraAlumniPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -75,7 +75,7 @@ export default async function KolomPage({
         <div className="absolute inset-0 batak-pattern" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Kolom
+            Suara Alumni
           </h1>
           <p className="mt-3 text-red-200 text-lg">
             Berita &middot; Artikel &middot; Opini &middot; Cerpen
