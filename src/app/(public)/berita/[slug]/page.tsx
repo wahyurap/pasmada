@@ -56,8 +56,16 @@ export default async function BeritaDetailPage({
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            Kembali ke Berita
+            Kembali ke Kolom
           </Link>
+          {(() => {
+            const KAT_LABEL: Record<string, string> = { BERITA: "Berita", ARTIKEL: "Artikel", OPINI: "Opini", CERPEN: "Cerpen" };
+            return (
+              <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#D97706] text-white mb-3">
+                {KAT_LABEL[berita.kategori] || "Berita"}
+              </span>
+            );
+          })()}
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
             {berita.judul}
           </h1>

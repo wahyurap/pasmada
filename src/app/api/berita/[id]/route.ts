@@ -43,7 +43,9 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
-    const { judul, konten, ringkasan, gambar, published } = body;
+    const { judul, konten, ringkasan, gambar, kategori, published } = body;
+    const VALID_KAT = ["BERITA", "ARTIKEL", "OPINI", "CERPEN"];
+    const kategoriValid = kategori !== undefined && VALID_KAT.includes(kategori) ? kategori : undefined;
 
     const existing = await prisma.berita.findUnique({ where: { id } });
     if (!existing) {
@@ -60,6 +62,7 @@ export async function PUT(
         ...(konten !== undefined && { konten }),
         ...(ringkasan !== undefined && { ringkasan }),
         ...(gambar !== undefined && { gambar }),
+        ...(kategoriValid !== undefined && { kategori: kategoriValid }),
         ...(published !== undefined && { published }),
       },
     });

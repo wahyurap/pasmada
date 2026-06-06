@@ -12,6 +12,7 @@ export default function TambahBeritaPage() {
     konten: "",
     penulis: "",
     gambar: "",
+    kategori: "BERITA" as "BERITA" | "ARTIKEL" | "OPINI" | "CERPEN",
     published: false,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -50,6 +51,7 @@ export default function TambahBeritaPage() {
           konten: form.konten,
           penulis: form.penulis,
           gambar: gambarUrl || null,
+          kategori: form.kategori,
           published: form.published,
         }),
       });
@@ -79,8 +81,8 @@ export default function TambahBeritaPage() {
           </svg>
         </Link>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Tambah Berita</h2>
-          <p className="text-gray-500 mt-0.5 text-sm">Buat artikel berita baru</p>
+          <h2 className="text-2xl font-bold text-gray-900">Tambah Kolom</h2>
+          <p className="text-gray-500 mt-0.5 text-sm">Buat tulisan baru: berita, artikel, opini, atau cerpen</p>
         </div>
       </div>
 
@@ -105,17 +107,34 @@ export default function TambahBeritaPage() {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Penulis
-          </label>
-          <input
-            type="text"
-            value={form.penulis}
-            onChange={(e) => setForm({ ...form, penulis: e.target.value })}
-            placeholder="Nama penulis"
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Penulis
+            </label>
+            <input
+              type="text"
+              value={form.penulis}
+              onChange={(e) => setForm({ ...form, penulis: e.target.value })}
+              placeholder="Nama penulis"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Kategori <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={form.kategori}
+              onChange={(e) => setForm({ ...form, kategori: e.target.value as typeof form.kategori })}
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30"
+            >
+              <option value="BERITA">Berita</option>
+              <option value="ARTIKEL">Artikel</option>
+              <option value="OPINI">Opini</option>
+              <option value="CERPEN">Cerpen</option>
+            </select>
+          </div>
         </div>
 
         <div>

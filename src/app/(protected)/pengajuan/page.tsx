@@ -32,7 +32,7 @@ interface ExistingItem {
 }
 
 const TYPE_LABELS: Record<SubmissionType, string> = {
-  BERITA: "Berita",
+  BERITA: "Kolom",
   AGENDA: "Agenda",
   ALBUM: "Album",
   SETTINGS: "Pengaturan",
@@ -92,7 +92,7 @@ export default function PengajuanPage() {
   const [loadingItems, setLoadingItems] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ExistingItem | null>(null);
 
-  const [beritaForm, setBeritaForm] = useState({ judul: "", ringkasan: "", konten: "", penulis: "", gambar: "" });
+  const [beritaForm, setBeritaForm] = useState({ judul: "", ringkasan: "", konten: "", penulis: "", gambar: "", kategori: "BERITA" as "BERITA" | "ARTIKEL" | "OPINI" | "CERPEN" });
   const [beritaGambarFile, setBeritaGambarFile] = useState<File | null>(null);
   const [uploadingBeritaGambar, setUploadingBeritaGambar] = useState(false);
 
@@ -160,7 +160,7 @@ export default function PengajuanPage() {
     setSelectedItem(null);
 
     if (mode === "BERITA") {
-      setBeritaForm({ judul: "", ringkasan: "", konten: "", penulis: session?.user?.name || "", gambar: "" });
+      setBeritaForm({ judul: "", ringkasan: "", konten: "", penulis: session?.user?.name || "", gambar: "", kategori: "BERITA" });
       setBeritaGambarFile(null);
     }
     if (mode === "AGENDA") setAgendaForm({ judul: "", deskripsi: "", tanggal: "", lokasi: "" });
@@ -185,12 +185,16 @@ export default function PengajuanPage() {
     setSelectedItem(item);
     setFormError("");
     if (modalMode === "BERITA_EDIT") {
+      const kat = (item as { kategori?: string }).kategori;
+      const validKat: "BERITA" | "ARTIKEL" | "OPINI" | "CERPEN" =
+        kat === "ARTIKEL" || kat === "OPINI" || kat === "CERPEN" ? kat : "BERITA";
       setBeritaForm({
         judul: item.judul || "",
         ringkasan: item.ringkasan || "",
         konten: item.konten || "",
         penulis: item.penulis || session?.user?.name || "",
         gambar: item.gambar || "",
+        kategori: validKat,
       });
       setBeritaGambarFile(null);
     } else if (modalMode === "AGENDA_EDIT") {
@@ -329,8 +333,8 @@ export default function PengajuanPage() {
 
   function getModalTitle() {
     switch (modalMode) {
-      case "BERITA": return "Ajukan Berita Baru";
-      case "BERITA_EDIT": return editStep === 1 ? "Pilih Berita yang Ingin Diedit" : `Edit Berita: ${selectedItem?.judul}`;
+      case "BERITA": return "Ajukan Tulisan Baru (Berita / Artikel / Opini / Cerpen)";
+      case "BERITA_EDIT": return editStep === 1 ? "Pilih Tulisan yang Ingin Diedit" : `Edit Kolom: ${selectedItem?.judul}`;
       case "AGENDA": return "Ajukan Agenda Baru";
       case "AGENDA_EDIT": return editStep === 1 ? "Pilih Agenda yang Ingin Diedit" : `Edit Agenda: ${selectedItem?.judul}`;
       case "ALBUM": return "Ajukan Album Baru";
@@ -375,7 +379,7 @@ export default function PengajuanPage() {
               onClick={() => openModal("BERITA_EDIT")}
               className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
             >
-              ✏️ Edit Berita
+              ✏️ Edit Kolom
             </button>
             <button
               onClick={() => openModal("AGENDA_EDIT")}
@@ -537,9 +541,20 @@ export default function PengajuanPage() {
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">Konten <span className="text-red-500">*</span></label>
                         <textarea rows={8} className={inputCls + " resize-none"} value={beritaForm.konten} onChange={(e) => setBeritaForm((p) => ({ ...p, konten: e.target.value }))} placeholder="Isi berita selengkapnya..." />
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Penulis</label>
-                        <input type="text" className={inputCls} value={beritaForm.penulis} onChange={(e) => setBeritaForm((p) => ({ ...p, penulis: e.target.value }))} placeholder="Nama penulis" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1.5">Penulis</label>
+                          <input type="text" className={inputCls} value={beritaForm.penulis} onChange={(e) => setBeritaForm((p) => ({ ...p, penulis: e.target.value }))} placeholder="Nama penulis" />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1.5">Kategori <span className="text-red-500">*</span></label>
+                          <select className={inputCls} value={beritaForm.kategori} onChange={(e) => setBeritaForm((p) => ({ ...p, kategori: e.target.value as typeof beritaForm.kategori }))}>
+                            <option value="BERITA">Berita</option>
+                            <option value="ARTIKEL">Artikel</option>
+                            <option value="OPINI">Opini</option>
+                            <option value="CERPEN">Cerpen</option>
+                          </select>
+                        </div>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">Gambar Cover</label>

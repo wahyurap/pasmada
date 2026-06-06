@@ -7,9 +7,24 @@ interface Berita {
   id: string;
   judul: string;
   penulis: string;
+  kategori: "BERITA" | "ARTIKEL" | "OPINI" | "CERPEN";
   published: boolean;
   createdAt: string;
 }
+
+const KAT_LABEL: Record<string, string> = {
+  BERITA: "Berita",
+  ARTIKEL: "Artikel",
+  OPINI: "Opini",
+  CERPEN: "Cerpen",
+};
+
+const KAT_COLOR: Record<string, string> = {
+  BERITA: "bg-blue-100 text-blue-800",
+  ARTIKEL: "bg-emerald-100 text-emerald-800",
+  OPINI: "bg-amber-100 text-amber-800",
+  CERPEN: "bg-purple-100 text-purple-800",
+};
 
 interface Meta {
   page: number;
@@ -105,7 +120,7 @@ export default function AdminBeritaPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Manajemen Berita</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Manajemen Kolom</h2>
           <p className="text-gray-500 mt-1">
             {meta ? `Total: ${meta.total} berita` : ""}
           </p>
@@ -117,7 +132,7 @@ export default function AdminBeritaPage() {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          Tambah Berita
+          Tambah Kolom
         </Link>
       </div>
 
@@ -138,6 +153,7 @@ export default function AdminBeritaPage() {
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">Judul</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600">Kategori</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">Penulis</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">Tanggal</th>
@@ -147,13 +163,13 @@ export default function AdminBeritaPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-10 text-gray-400">
+                  <td colSpan={6} className="text-center py-10 text-gray-400">
                     Memuat data...
                   </td>
                 </tr>
               ) : berita.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-10 text-gray-400">
+                  <td colSpan={6} className="text-center py-10 text-gray-400">
                     Belum ada berita
                   </td>
                 </tr>
@@ -162,6 +178,11 @@ export default function AdminBeritaPage() {
                   <tr key={b.id} className="border-b border-gray-50 hover:bg-gray-50/50">
                     <td className="px-4 py-3 font-medium text-gray-800 max-w-[220px] truncate">
                       {b.judul}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${KAT_COLOR[b.kategori] || KAT_COLOR.BERITA}`}>
+                        {KAT_LABEL[b.kategori] || "Berita"}
+                      </span>
                     </td>
                     <td className="px-4 py-3 text-gray-600">{b.penulis}</td>
                     <td className="px-4 py-3">

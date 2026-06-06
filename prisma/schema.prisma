@@ -53,20 +53,28 @@ model Alumni {
   @@index([namaLengkap])
 }
 
+enum KolomKategori {
+  BERITA
+  ARTIKEL
+  OPINI
+  CERPEN
+}
+
 model Berita {
-  id        String   @id @default(cuid())
+  id        String        @id @default(cuid())
   judul     String
-  slug      String   @unique
-  konten    String   @db.Text
+  slug      String        @unique
+  konten    String        @db.Text
   ringkasan String?
   gambar    String?
   penulis   String
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  kategori  KolomKategori @default(BERITA)
+  published Boolean       @default(false)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   @@index([slug])
-  @@index([published, createdAt])
+  @@index([published, kategori, createdAt])
 }
 
 model Agenda {

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const quickLinks = [
   { href: "/tentang", label: "Tentang Kami" },
-  { href: "/berita", label: "Berita" },
+  { href: "/berita", label: "Kolom" },
   { href: "/agenda", label: "Agenda" },
   { href: "/galeri", label: "Galeri" },
   { href: "/kontak", label: "Kontak" },

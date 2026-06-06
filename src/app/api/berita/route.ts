@@ -62,7 +62,9 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { judul, konten, ringkasan, gambar, published } = body;
+    const { judul, konten, ringkasan, gambar, kategori, published } = body;
+    const VALID_KAT = ["BERITA", "ARTIKEL", "OPINI", "CERPEN"];
+    const kat = VALID_KAT.includes(kategori) ? kategori : "BERITA";
 
     if (!judul || !konten) {
       return NextResponse.json(
@@ -87,6 +89,7 @@ export async function POST(request: NextRequest) {
         ringkasan: ringkasan || null,
         gambar: gambar || null,
         penulis: session.user?.name || "Admin",
+        kategori: kat,
         published: published ?? false,
       },
     });

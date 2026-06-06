@@ -44,6 +44,8 @@ export async function PATCH(
             where: { slug: newSlug, NOT: { id: data.editTargetId } },
           });
           if (slugConflict) newSlug = `${newSlug}-${Date.now()}`;
+          const VALID_KAT = ["BERITA", "ARTIKEL", "OPINI", "CERPEN"];
+          const kategoriEdit = VALID_KAT.includes(data.kategori) ? data.kategori : undefined;
           await prisma.berita.update({
             where: { id: data.editTargetId },
             data: {
@@ -53,12 +55,15 @@ export async function PATCH(
               ringkasan: data.ringkasan || null,
               penulis: data.penulis || "Alumni",
               gambar: data.gambar || null,
+              ...(kategoriEdit && { kategori: kategoriEdit }),
             },
           });
         } else {
           let slug = slugify(data.judul || "berita");
           const existing = await prisma.berita.findUnique({ where: { slug } });
           if (existing) slug = `${slug}-${Date.now()}`;
+          const VALID_KAT = ["BERITA", "ARTIKEL", "OPINI", "CERPEN"];
+          const kategoriNew = VALID_KAT.includes(data.kategori) ? data.kategori : "BERITA";
           await prisma.berita.create({
             data: {
               judul: data.judul,
@@ -67,6 +72,7 @@ export async function PATCH(
               ringkasan: data.ringkasan || null,
               penulis: data.penulis || "Alumni",
               gambar: data.gambar || null,
+              kategori: kategoriNew,
               published: true,
             },
           });
