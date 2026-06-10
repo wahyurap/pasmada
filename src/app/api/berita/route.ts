@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { sanitizeHtml, isHtmlEmpty } from "@/lib/sanitize";
 
 function slugify(text: string): string {
   return text
@@ -66,12 +67,14 @@ export async function POST(request: NextRequest) {
     const VALID_KAT = ["BERITA", "ARTIKEL", "OPINI", "CERPEN"];
     const kat = VALID_KAT.includes(kategori) ? kategori : "BERITA";
 
-    if (!judul || !konten) {
+    if (!judul || isHtmlEmpty(konten)) {
       return NextResponse.json(
         { error: "Judul dan konten wajib diisi" },
         { status: 400 }
       );
     }
+
+    const kontenClean = sanitizeHtml(konten);
 
     let slug = slugify(judul);
 
@@ -85,7 +88,7 @@ export async function POST(request: NextRequest) {
       data: {
         judul,
         slug,
-        konten,
+        konten: kontenClean,
         ringkasan: ringkasan || null,
         gambar: gambar || null,
         penulis: session.user?.name || "Admin",

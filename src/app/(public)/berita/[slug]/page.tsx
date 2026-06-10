@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
+import RichContent from "@/components/RichContent";
 
 export const dynamic = "force-dynamic";
 
@@ -87,10 +88,7 @@ export default async function BeritaDetailPage({
             />
           )}
 
-          <div
-            className="prose prose-lg max-w-none text-gray-700"
-            dangerouslySetInnerHTML={{ __html: berita.konten }}
-          />
+          <RichContent html={berita.konten} />
 
           <div className="mt-12 pt-8 border-t border-gray-200">
             <Link

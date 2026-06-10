@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { sanitizeHtml, isHtmlEmpty } from "@/lib/sanitize";
 
 const KATEGORI = ["LOKER", "USAHA", "AGEN", "LAINNYA"] as const;
 type Kategori = typeof KATEGORI[number];
@@ -64,7 +65,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { judul, kategori, ringkasan, konten, gambar, kontak, link, expiredAt, published } = body;
 
-    if (!judul || !kategori || !ringkasan || !konten) {
+    if (!judul || !kategori || !ringkasan || isHtmlEmpty(konten)) {
       return NextResponse.json(
         { error: "Judul, kategori, ringkasan, dan konten wajib diisi" },
         { status: 400 }
@@ -79,7 +80,7 @@ export async function POST(request: NextRequest) {
         judul,
         kategori,
         ringkasan,
-        konten,
+        konten: sanitizeHtml(konten),
         gambar: gambar || null,
         kontak: kontak || null,
         link: link || null,

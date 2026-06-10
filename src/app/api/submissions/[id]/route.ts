@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 function slugify(text: string): string {
   return text
@@ -51,7 +52,7 @@ export async function PATCH(
             data: {
               judul: data.judul,
               slug: newSlug,
-              konten: data.konten,
+              konten: sanitizeHtml(data.konten),
               ringkasan: data.ringkasan || null,
               penulis: data.penulis || "Alumni",
               gambar: data.gambar || null,
@@ -68,7 +69,7 @@ export async function PATCH(
             data: {
               judul: data.judul,
               slug,
-              konten: data.konten,
+              konten: sanitizeHtml(data.konten),
               ringkasan: data.ringkasan || null,
               penulis: data.penulis || "Alumni",
               gambar: data.gambar || null,
@@ -149,7 +150,7 @@ export async function PATCH(
             pekerjaan: data.pekerjaan,
             foto: data.foto || null,
             ringkasan: data.ringkasan,
-            kisah: data.kisah,
+            kisah: sanitizeHtml(data.kisah),
             published: true,
           },
         });
@@ -159,7 +160,7 @@ export async function PATCH(
             judul: data.judul,
             kategori: data.kategori,
             ringkasan: data.ringkasan,
-            konten: data.konten,
+            konten: sanitizeHtml(data.konten),
             gambar: data.gambar || null,
             kontak: data.kontak || null,
             link: data.link || null,

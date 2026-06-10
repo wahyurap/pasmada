@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { sanitizeHtml, isHtmlEmpty } from "@/lib/sanitize";
 
 export async function GET(request: NextRequest) {
   try {
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { nama, tahunLulus, pekerjaan, foto, ringkasan, kisah, published } = body;
 
-    if (!nama || !tahunLulus || !pekerjaan || !ringkasan || !kisah) {
+    if (!nama || !tahunLulus || !pekerjaan || !ringkasan || isHtmlEmpty(kisah)) {
       return NextResponse.json(
         { error: "Nama, tahun lulus, pekerjaan, ringkasan, dan kisah wajib diisi" },
         { status: 400 }
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
         pekerjaan,
         foto: foto || null,
         ringkasan,
-        kisah,
+        kisah: sanitizeHtml(kisah),
         published: published !== false,
       },
     });

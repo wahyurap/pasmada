@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import RichTextEditor from "@/components/editor/RichTextEditor";
 
 type Kategori = "LOKER" | "USAHA" | "AGEN" | "LAINNYA";
 
@@ -259,7 +260,12 @@ export default function AdminInfoPage() {
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Konten *</label>
-                <textarea value={form.konten} onChange={(e) => setForm({ ...form, konten: e.target.value })} rows={8} className={inputCls} />
+                <RichTextEditor
+                  value={form.konten}
+                  onChange={(html) => setForm({ ...form, konten: html })}
+                  placeholder="Detail info selengkapnya..."
+                  uploadSubdir="info"
+                />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>

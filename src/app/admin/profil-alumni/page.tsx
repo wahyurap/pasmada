@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import RichTextEditor from "@/components/editor/RichTextEditor";
 
 interface AlumniPilihan {
   id: string;
@@ -295,12 +296,11 @@ export default function AdminProfilAlumniPage() {
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Kisah Perjalanan *</label>
-                <textarea
+                <RichTextEditor
                   value={form.kisah}
-                  onChange={(e) => setForm({ ...form, kisah: e.target.value })}
-                  rows={10}
+                  onChange={(html) => setForm({ ...form, kisah: html })}
                   placeholder="Kisah lengkap perjalanan pendidikan dan karir..."
-                  className={inputCls}
+                  uploadSubdir="alumni-pilihan"
                 />
               </div>
               <div className="flex items-center gap-2">

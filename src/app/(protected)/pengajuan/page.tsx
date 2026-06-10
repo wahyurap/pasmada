@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import RichTextEditor from "@/components/editor/RichTextEditor";
 
 type SubmissionType = "BERITA" | "AGENDA" | "ALBUM" | "SETTINGS" | "ALUMNI_PILIHAN" | "INFO";
 type EditMode = "BERITA_EDIT" | "AGENDA_EDIT" | "ALBUM_FOTO";
@@ -459,7 +460,13 @@ export default function PengajuanPage() {
       {/* Modal */}
       {modalMode && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+          <div
+            className={`bg-white rounded-2xl shadow-xl w-full max-h-[90vh] overflow-y-auto ${
+              modalMode === "BERITA" || modalMode === "BERITA_EDIT" || modalMode === "ALUMNI_PILIHAN" || modalMode === "INFO"
+                ? "max-w-2xl"
+                : "max-w-lg"
+            }`}
+          >
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 {isEditMode && editStep === 2 && (
@@ -539,7 +546,12 @@ export default function PengajuanPage() {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">Konten <span className="text-red-500">*</span></label>
-                        <textarea rows={8} className={inputCls + " resize-none"} value={beritaForm.konten} onChange={(e) => setBeritaForm((p) => ({ ...p, konten: e.target.value }))} placeholder="Isi berita selengkapnya..." />
+                        <RichTextEditor
+                          value={beritaForm.konten}
+                          onChange={(html) => setBeritaForm((p) => ({ ...p, konten: html }))}
+                          placeholder="Isi berita selengkapnya... gunakan toolbar untuk heading, daftar, kutipan, gambar, dsb."
+                          uploadSubdir="berita"
+                        />
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
@@ -721,7 +733,12 @@ export default function PengajuanPage() {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">Kisah Perjalanan <span className="text-red-500">*</span></label>
-                        <textarea rows={10} className={inputCls + " resize-none"} value={alumniPilihanForm.kisah} onChange={(e) => setAlumniPilihanForm((p) => ({ ...p, kisah: e.target.value }))} placeholder="Tulis kisah lengkap perjalanan pendidikan & karir alumni..." />
+                        <RichTextEditor
+                          value={alumniPilihanForm.kisah}
+                          onChange={(html) => setAlumniPilihanForm((p) => ({ ...p, kisah: html }))}
+                          placeholder="Tulis kisah lengkap perjalanan pendidikan & karir alumni..."
+                          uploadSubdir="alumni-pilihan"
+                        />
                       </div>
                     </>
                   )}
@@ -749,7 +766,12 @@ export default function PengajuanPage() {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">Konten <span className="text-red-500">*</span></label>
-                        <textarea rows={8} className={inputCls + " resize-none"} value={infoForm.konten} onChange={(e) => setInfoForm((p) => ({ ...p, konten: e.target.value }))} placeholder="Detail info..." />
+                        <RichTextEditor
+                          value={infoForm.konten}
+                          onChange={(html) => setInfoForm((p) => ({ ...p, konten: html }))}
+                          placeholder="Detail info selengkapnya..."
+                          uploadSubdir="info"
+                        />
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>

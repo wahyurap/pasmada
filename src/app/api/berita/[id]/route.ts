@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export async function GET(
   _request: NextRequest,
@@ -59,7 +60,7 @@ export async function PUT(
       where: { id },
       data: {
         ...(judul !== undefined && { judul }),
-        ...(konten !== undefined && { konten }),
+        ...(konten !== undefined && { konten: sanitizeHtml(konten) }),
         ...(ringkasan !== undefined && { ringkasan }),
         ...(gambar !== undefined && { gambar }),
         ...(kategoriValid !== undefined && { kategori: kategoriValid }),

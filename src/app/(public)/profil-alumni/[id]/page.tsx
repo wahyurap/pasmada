@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import RichContent from "@/components/RichContent";
 
 export const dynamic = "force-dynamic";
 
@@ -69,9 +70,7 @@ export default async function ProfilAlumniDetailPage({
           </p>
         </div>
 
-        <div className="prose prose-lg max-w-none text-gray-700 whitespace-pre-line leading-relaxed">
-          {item.kisah}
-        </div>
+        <RichContent html={item.kisah} />
       </div>
     </article>
   );

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import RichContent from "@/components/RichContent";
 
 export const dynamic = "force-dynamic";
 
@@ -106,9 +107,7 @@ export default async function InfoDetailPage({
           <p className="text-gray-700 italic">{item.ringkasan}</p>
         </div>
 
-        <div className="mt-8 prose prose-lg max-w-none text-gray-700 whitespace-pre-line leading-relaxed">
-          {item.konten}
-        </div>
+        <RichContent html={item.konten} className="mt-8" />
 
         {(item.kontak || item.link) && (
           <div className="mt-8 p-5 bg-gray-50 rounded-xl border border-gray-100">

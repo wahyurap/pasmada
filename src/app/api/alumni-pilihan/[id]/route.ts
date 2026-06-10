@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export async function GET(
   _request: NextRequest,
@@ -47,7 +48,7 @@ export async function PATCH(
         ...(pekerjaan !== undefined && { pekerjaan }),
         ...(foto !== undefined && { foto: foto || null }),
         ...(ringkasan !== undefined && { ringkasan }),
-        ...(kisah !== undefined && { kisah }),
+        ...(kisah !== undefined && { kisah: sanitizeHtml(kisah) }),
         ...(published !== undefined && { published }),
       },
     });

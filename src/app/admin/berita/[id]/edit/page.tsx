@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import RichTextEditor from "@/components/editor/RichTextEditor";
 
 interface BeritaData {
   id: string;
@@ -219,13 +220,15 @@ export default function EditBeritaPage({
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Konten <span className="text-red-500">*</span>
           </label>
-          <textarea
+          <RichTextEditor
             value={form.konten}
-            onChange={(e) => setForm({ ...form, konten: e.target.value })}
-            required
-            rows={12}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#991B1B]/30 resize-y"
+            onChange={(html) => setForm({ ...form, konten: html })}
+            placeholder="Tulis konten lengkap di sini... gunakan toolbar untuk heading, daftar, kutipan, gambar, dsb."
+            uploadSubdir="berita"
           />
+          <p className="mt-1.5 text-xs text-gray-400">
+            Gunakan toolbar untuk format teks (heading, tebal, daftar, kutipan, tautan, gambar) layaknya editor Notion/Medium.
+          </p>
         </div>
 
         <div>
