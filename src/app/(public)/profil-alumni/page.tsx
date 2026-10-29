@@ -61,12 +61,12 @@ export default async function ProfilAlumniPage() {
                   href={`/profil-alumni/${item.id}`}
                   className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition"
                 >
-                  <div className="aspect-[4/3] bg-gradient-to-br from-red-50 to-amber-50 relative overflow-hidden">
+                  <div className="aspect-[3/4] bg-gradient-to-br from-red-50 to-amber-50 relative overflow-hidden">
                     {item.foto ? (
                       <img
                         src={item.foto}
                         alt={item.nama}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full">
