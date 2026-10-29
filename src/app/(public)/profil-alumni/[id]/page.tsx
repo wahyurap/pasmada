@@ -55,11 +55,11 @@ export default async function ProfilAlumniDetailPage({
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {item.foto && (
-          <div className="mb-8 rounded-2xl overflow-hidden shadow-lg">
+          <div className="mb-8 flex justify-center">
             <img
               src={item.foto}
               alt={item.nama}
-              className="w-full h-auto max-h-[500px] object-cover"
+              className="rounded-2xl shadow-lg max-h-[560px] w-auto object-contain"
             />
           </div>
         )}
